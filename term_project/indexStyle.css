@@ -1,0 +1,158 @@
+
+/* Body styles */
+body {
+	margin: 0px;
+	font-family: "Helvetica", Georgia, Serif;
+	background-color: #000000;
+}
+
+div#header{
+	height:7%;
+	margin:0 px;
+	padding: 0;
+	color: #ffffff;
+	background-color: #001A4C;
+	width: 100%;	
+	overflow:hidden;
+}
+
+
+div#signBox{
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	margin: auto;
+	width: 40%;
+	height:55%;
+	text-align: center;
+	display: table-cell;
+    vertical-align: middle;
+	border-radius: 15px;
+	padding: 12px 12px 12px 12px;
+	color: #ffffff;
+	background-color: #001A4C;
+	
+}
+
+
+input[type=text]{
+	background:#000F2E;
+	border: none;
+    color: #E0E0E0;
+    height: 25px;
+    line-height:15px;
+    margin-bottom: 10px;
+    margin-right: 6px;
+    margin-top: 10px;
+    outline: 0 none;
+    padding: 0px 0px 0px 0px;
+    width: 70%;
+    border-radius: 2px;
+}
+
+input[type=password]{
+	background:#000F2E;
+	border: none;
+    color: #E0E0E0;
+    height: 25px;
+    line-height:15px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 5px 0px 5px 5px;
+    width: 70%;
+    border-radius: 2px;
+}
+
+input[type=date]{
+	background:#000F2E;
+	border: none;
+    color: #E0E0E0;
+    height: 25px;
+    line-height:15px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 5px 0px 5px 5px;
+    width: 70%;
+    border-radius: 2px;
+}
+
+p{
+text-align: center;
+}
+
+h1{
+	font-size: 30px;
+    line-height: 0px;
+	font-weight: bold;
+    color: #ffffff;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+h3{
+	text-align: left;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+input[type=submit]{
+    border-style: solid;
+    border-width: 1px;
+	border-color: #000000;
+	font-weight: bold;
+	border: 1px #000000;
+	width:375px;
+	background:#000F2E;
+	border: none;
+    color: #E0E0E0;
+    height: 25px;
+    line-height:15px;
+    margin-bottom: 5px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 0px 0px px 0px;
+    width: 70%;
+    border-radius: 2px;
+}
+
+.side
+{
+	width:50%;
+	height:100%;
+	float:left;
+	text-align:left;
+}
+
+div#fixedBox{
+	float:center;
+	height: 75%;
+	color: #ffffff;
+	overflow: auto;
+	white-space: normal; 
+	display: block;
+	background-color: #000F2E;
+	width: 95%;
+}
+
+/* unvisited link */
+a:link {
+	font-weight: bold;
+    color: #ffffff;
+	text-decoration: none;
+}
+/* visited link */
+a:visited {
+    color: #ffffff;
+	text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: #CACACA;
+	text-decoration: none;
+}
