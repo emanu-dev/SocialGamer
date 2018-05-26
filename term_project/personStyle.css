@@ -1,0 +1,120 @@
+body {
+	font-family: "Helvetica", Georgia, Serif;
+	background-color: #000000;
+	margin: 0px;
+}
+
+div#header{
+	height:7%;
+	margin:0 px;
+	padding: 0;
+	color: #ffffff;
+	background-color: #001A4C;
+	width: 100%;	
+	overflow:hidden;
+}
+
+div#signBox{
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	margin: auto;
+	width: 40%;
+	height:50%;
+	text-align: center;
+	display: table-cell;
+    vertical-align: middle;
+	border-radius: 15px;
+	padding: 12px 12px 12px 12px;
+	color: #ffffff;
+	background-color: #001A4C;
+	
+}
+
+.content{
+text-align:left;
+width: 100%;
+height: 30%;
+}
+
+div #details
+{
+	float:left;
+	width: 50%;
+	text-align:left;
+	height: 30%;
+}
+
+div#library
+{
+	float: left;
+	width: 50%;
+	text-align:left;
+	height: 30%;
+}
+
+.fixedBox{
+	float:left;
+	height: 75%;
+	color: #ffffff;
+	overflow: auto;
+	white-space: normal; 
+	display: block;
+	background-color: #000F2E;
+	width: 100%;
+}
+
+table#gameTable{
+	color: #ffffff;
+	width: 100%;
+}
+	
+table#gameTable td {
+	color: #ffffff;
+	width: 50%;
+	text-align: center;
+}
+
+table#gameTable th {
+	color: #ffffff;
+	width: 50%;
+	text-align: center;
+	font-weight: bold;
+	border-bottom: 1px solid #ffffff;
+}
+
+h3{
+	font-size: 20px;
+	text-align: left;
+    line-height: 0px;
+	font-weight: bold;
+    color: #ffffff;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+h1{
+	text-align: left;
+	line-height: 0px;
+	font-weight: bold;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+/* unvisited link */
+a:link {
+	font-weight: bold;
+    color: #ffffff;
+	text-decoration: none;
+}
+/* visited link */
+a:visited {
+    color: #ffffff;
+	text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: #CACACA;
+	text-decoration: none;
+}
