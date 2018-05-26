@@ -1,23 +1,19 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<%@ page language="java" %>
-<%@ page import = "java.sql.*"%>
-<%@ page import = "java.util.Date"%>
-<%@ page import="java.text.SimpleDateFormat" %>
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="indexStyle.css">
 	<title>Social Gamer - Friend Requests</title>
 </head>
 <body>
-	<%!
-		Connection conn;
-		Statement stmt;			
-		String url = "jdbc:mysql://localhost:3306/comp5000?allowMultiQueries=true";
-		String password = "root";
-		String username = "root";
-		String query;
-		String userid;
-	%>
+	<?php 
+		include 'db_conn_var.php';
+		$userid;
+	?>
+
 	<%
 			if (session.getAttribute("logged_userID") == null)
 			{
