@@ -1,9 +1,16 @@
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/colors';
+
+
 
 /* Body styles */
-body {
+.box-wrapper {
+	display: flex;
 	margin: 0px;
-	font-family: "Helvetica", Georgia, Serif;
 	background-color: #212121;
+    width: 100%;
+    height: 100%;	
 }
 
 .bg-video {
@@ -13,7 +20,7 @@ body {
     overflow: hidden;
     width: 100%; 
     height: 100%;	
-    opacity: 0.8;
+    opacity: 0.2;
 }
 
 @media (min-aspect-ratio: 16/9) {
@@ -30,6 +37,51 @@ body {
   }
 }
 
+.signBox{
+	position: relative;
+	margin: auto;
+	width: 40%;
+	height:auto;
+	min-width: 300px;
+	text-align: center;
+	border-radius: 15px;
+	padding: 12px 12px 12px 12px;
+	color: #ffffff;
+
+	.loginBtn {
+		//light-ui
+		background-color: $steel-blue;
+		
+		// dark-ui
+		background-color: $tomato;
+		
+		font-family: 'Regular', sans-serif;
+		font-size: 1rem;
+		cursor: pointer;
+		margin-bottom: 1rem;
+		padding: 5px 0px 5px 5px;
+		width: 50%;
+
+		&:hover {
+			box-shadow: 0px 0px 11px 4px rgba(255,255,255,0.16);
+		}
+	}
+
+	.loginInput {
+		//light-ui
+		background-color: $white;
+		
+		// dark-ui
+		background-color: $slate-gray;
+		
+		color: $white;
+		font-family: 'Regular', sans-serif;
+		font-size: 1rem;
+		margin-bottom: 1rem;
+		padding: 5px 0px 5px 5px;
+	}
+}
+
 div#header{
 	height:7%;
 	margin:0 px;
@@ -41,31 +93,11 @@ div#header{
 }
 
 
-.signBox{
-	position: absolute;
-	top: 0; bottom: 0;
-	left: 0; right: 0;
-	margin: auto;
-	width: 40%;
-	height:auto;
-	min-width: 300px;
-	text-align: center;
-	display: table-cell;
-    vertical-align: middle;
-	border-radius: 15px;
-	padding: 12px 12px 12px 12px;
-	color: #ffffff;
-	background-color: #001A4C;
-	
-}
+
 
 
 input[type=text]{
-	background:#000F2E;
 	border: none;
-    color: #E0E0E0;
-    height: 25px;
-    line-height:15px;
     margin-bottom: 10px;
     margin-right: 6px;
     margin-top: 10px;
@@ -76,11 +108,7 @@ input[type=text]{
 }
 
 input[type=password]{
-	background:#000F2E;
 	border: none;
-    color: #E0E0E0;
-    height: 25px;
-    line-height:15px;
     margin-bottom: 16px;
     margin-right: 6px;
     margin-top: 2px;
@@ -141,7 +169,7 @@ input[type=submit]{
     margin-top: 2px;
     outline: 0 none;
     padding: 0px 0px px 0px;
-    width: 70%;
+
     border-radius: 2px;
 }
 
@@ -180,4 +208,13 @@ a:visited {
 a:hover {
     color: #CACACA;
 	text-decoration: none;
+}
+
+
+
+//text modules
+.text {
+	&.--regular {
+		font-family: 'Regular';
+	}
 }

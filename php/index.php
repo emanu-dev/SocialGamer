@@ -6,17 +6,17 @@ session_start();
 <html lang='pt-br'>
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
+	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
 	<title>Social Gamer - Log In</title>
 </head>
 <body>
-
+	<video autoplay muted loop class="bg-video" id="bgVideo">
+		<source src="video/rain.mp4" type="video/mp4">
+	</video>
 	<?php 
 		include 'db_conn_var.php';
 	?>
-
 	<?php
-
 		if (isset($_GET['status']))
 			{
 				if (($_GET['status']) == "logout")
@@ -71,55 +71,53 @@ session_start();
 		    echo $e->getMessage();
 		}
 	?>
+	<div class="box-wrapper">
+		<div class="signBox">
+			<p><img src="logo.png"><br>
+				<form action="index.php" method="post">
+				<input class="loginInput" type="text" name="username" placeholder="Username"><br>
+				<input class="loginInput" type="password" name="password" placeholder="Password">
+				<input class="loginBtn" type="submit" value="Log In"></p>
+			</form>
+			
+			<?php
+			if (isset($_POST['username']) && !empty($_POST['username']))
+			{
+				$user = $_POST['username'];
+				$pass = $_POST['password'];
+				if ($user != null && $pass != null) {
+					try {
+						$conn = new mysqli($url, $username, $password, $dbname);
+			
+						if ($conn->connect_error) {
+							throw new Exception($conn->connect_error);
+						}else {
+						}				
+			
+						$query = "SELECT * FROM user WHERE username='".$user."' and password='".$pass."'";
+						$result = $conn->query($query);
 
-	<div id="signBox">
-		<p><img src="logo.png"><br>
-			<form action="index.php" method="post">
-			<input type="text" name="username" placeholder="Username"><br>
-			<input type="password" name="password" placeholder="Password">
-			<input type="submit" value="Log In"></p>
-		</form>
-
-		<?php
-		if (isset($_POST['username']) && !empty($_POST['username']))
-		{
-			$user = $_POST['username'];
-			$pass = $_POST['password'];
-			if ($user != null && $pass != null) {
-				try {
-					$conn = new mysqli($url, $username, $password, $dbname);
-		
-					if ($conn->connect_error) {
-						throw new Exception($conn->connect_error);
-					}else {
-					}				
-		
-					$query = "SELECT * FROM user WHERE username='".$user."' and password='".$pass."'";
-					$result = $conn->query($query);
-
-					if ($row = $result->num_rows > 0)
-						{
-							while($row = $result->fetch_assoc()) {
-							   $_SESSION["logged_userID"] = $row["userID"];
-							   $url="user_page.php";
-							   echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
+						if ($row = $result->num_rows > 0)
+							{
+								while($row = $result->fetch_assoc()) {
+								   $_SESSION["logged_userID"] = $row["userID"];
+								   $url="user_page.php";
+								   echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
+								}
+							}else{
+								echo "<br>Wrong username/password combination. <br> If you do not have an account, click on Sign Up.<br>";
 							}
-						}else{
-							echo "<br>Wrong username/password combination. <br> If you do not have an account, click on Sign Up.<br>";
-						}
-					$conn->close();	
-				}
-				catch(Exception $e)
-				{
-				    echo $e->getMessage();
-				}		
-			} 			
-		}
-
-
-		?>
-
-		<br>Don't have an account? <a href="signup.php">Sign up</a>
+						$conn->close();	
+					}
+					catch(Exception $e)
+					{
+					    echo $e->getMessage();
+					}		
+				} 			
+			}
+			?>
+			<p class="text --regular --small">Don't have an account? <a href="signup.php">Sign up</a></p>
+		</div>
 	</div>
 </body>
 </html>
