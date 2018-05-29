@@ -7,12 +7,15 @@ session_start();
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Social Gamer - Log In</title>
 </head>
 <body>
-	<video autoplay muted loop class="bg-video" id="bgVideo">
-		<source src="video/rain.mp4" type="video/mp4">
-	</video>
+	<video autoplay muted loop poster="images/bg-poster.JPG" class="bg-video" id="bgVideo">
+	   <source src="video/bg-video.mp4" type="video/mp4">
+	   <source src="video/bg-video.webm" type="video/webm">
+	   <source src="video/bg-video.ogv" type="video/ogg">
+	</video>	
 	<?php 
 		include 'db_conn_var.php';
 	?>
