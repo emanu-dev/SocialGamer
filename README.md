@@ -1,4 +1,4 @@
-# SocialGamer
+# WeGamr
 A Social Network devoted to gamers at heart!
 
 For this project to work, the mysql installed on the machine should have the following database:
