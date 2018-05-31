@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="indexStyle.css">
+	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
 	<title>Social Gamer - Sign up for an Account</title>
 </head>
 <body>

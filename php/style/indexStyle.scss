@@ -1,8 +1,7 @@
 @import 'base/reset';
 @import 'base/typography';
 @import 'base/colors';
-
-
+@import 'cleanup';
 
 /* Body styles */
 .box-wrapper {
@@ -137,28 +136,16 @@ p{
 text-align: center;
 }
 
-h1{
-	font-size: 30px;
-    line-height: 0px;
-	font-weight: bold;
-    color: #ffffff;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-}
 
-h3{
-	text-align: left;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-}
+
+
 
 input[type=submit]{
     border-style: solid;
     border-width: 1px;
 	border-color: #000000;
 	font-weight: bold;
-	border: 1px #000000;
-	width:375px;
+	border: none;
 	background:#000F2E;
 	border: none;
     color: #E0E0E0;
@@ -168,7 +155,7 @@ input[type=submit]{
     margin-right: 6px;
     margin-top: 2px;
     outline: 0 none;
-    padding: 0px 0px px 0px;
+    padding: 0px 0px 0px 0px;
 
     border-radius: 2px;
 }

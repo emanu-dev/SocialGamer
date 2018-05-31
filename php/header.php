@@ -1,38 +1,94 @@
-<div id="header">
-	<img src="user.png" width="37px" height="37px"><?php
-		try {
-			
-			$conn = new mysqli($url, $username, $password, $dbname);
+<nav>
+	<div class="sidebar">
+		<div class="sidebar-header">
+			<img class="brand-logo" src="img/wegamr-logo-white.svg" alt="">
+		</div><!-- sidebar-header -->
+		
+			<ul class="nav">
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="fa fa-bar-chart"></i>
+						Dashboard
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="fa fa-files-o"></i>
+						Biblioteca
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="fa fa-calendar"></i>
+						Consoles
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="fa fa-folder-o"></i>
+						Análises
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="fa fa-user"></i>
+						Amigos
+					</a>
+				</li>				
+			</ul>
+		
+	</div><!-- sidebar -->
+</nav>
 
-			if ($conn->connect_error) {
-				throw new Exception($conn->connect_error);
-			}else {
-				
-			}
+<header>
+	<div class="header">
+		<div class="container">
+			<div class="offcanvas">
+				<a href="#" class="js-open-sidebar item">
+					<i class="fa fa-bars"></i>
+				</a>
+			</div><!--offcanvas-->
 
-			$query = "SELECT * FROM user WHERE userID='".$userid."'";
-			$result = $conn->query($query);
-
-			if ($row = $result->num_rows > 0)
-			{
-				while($row = $result->fetch_assoc()) 
-				{
-					echo $row["username"];
-					$date = strtotime($row["dob"]);
-					$final_dob = date("M/d/y", $date);
-					?>
-					<img src="calendar.png" width="37px" height="37px" >
+			<div class="date-timer">
+				<p>
+					<span>
 					<?php
-					echo "Birth: ".$final_dob;
-				}
-			}
+							try {
+								
+								$conn = new mysqli($url, $username, $password, $dbname);
 
-			$conn->close();	
-		}
-		catch(Exception $e)
-		{
-			echo $e->getMessage();
-		}?>
+								if ($conn->connect_error) {
+									throw new Exception($conn->connect_error);
+								}else {
+									
+								}
 
-	<a href="index.php?status=logout" style="float: right;">Logout</a>
-</div>
+								$query = "SELECT * FROM user WHERE userID='".$userid."'";
+								$result = $conn->query($query);
+
+								if ($row = $result->num_rows > 0)
+								{
+									while($row = $result->fetch_assoc()) 
+									{
+										echo $row["username"];
+									}
+								}
+
+								$conn->close();	
+							}
+							catch(Exception $e)
+							{
+								echo $e->getMessage();
+							}?>						
+					</span>
+
+				</p>
+			</div><!-- date-timer -->
+
+			<div class="user">
+				<img src="images/user-photo.png" alt="">
+				<a href="index.php?status=logout" style="float: right;">Logout</a>
+			</div><!-- user -->
+		</div><!-- container -->
+	</div><!-- header -->
+</header>

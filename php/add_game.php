@@ -6,6 +6,7 @@ session_start();
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="indexStyle.css">
+	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
 	<title>Social Gamer - Add Game</title>
 </head>
 <body>
