@@ -8,7 +8,7 @@ session_start();
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Social Gamer - Log In</title>
+	<title>Wegamr</title>
 </head>
 <body>
 	<video autoplay muted loop poster="images/bg-poster.JPG" class="bg-video" id="bgVideo">
@@ -76,11 +76,12 @@ session_start();
 	?>
 	<div class="box-wrapper">
 		<div class="signBox">
-			<p><img src="logo.png"><br>
-				<form action="index.php" method="post">
-				<input class="loginInput" type="text" name="username" placeholder="Username"><br>
+			<img class="main-logo" src="images/wegamr-logo-purple.svg">
+			<p class="logo-title">WeGaMR</p>
+			<form action="index.php" method="post">
+				<input class="loginInput" type="text" name="username" placeholder="Username">
 				<input class="loginInput" type="password" name="password" placeholder="Password">
-				<input class="loginBtn" type="submit" value="Log In"></p>
+				<input class="loginBtn" type="submit" value="Log In">
 			</form>
 			
 			<?php

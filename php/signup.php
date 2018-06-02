@@ -1,25 +1,29 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang='pt-br'>
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
 	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Sign up for an Account</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Wegamr</title>
 </head>
 <body>
 	<?php 
 		include 'db_conn_var.php';
 	?>
 
-	<div id="signBox">
+	<div class="signBox">
 		<h1>Create a New Account</h1><br><br>
 		<form action="signup.php" method="post">
-		<input type="text" name="username" placeholder="Username">
-		<input type="password" name="password" placeholder="Password">
-		<p>Date of Birth:
-		<input name="dob" type="date">
+		<input class="loginInput" type="text" name="username" placeholder="Username">
+		<input class="loginInput" type="password" name="password" placeholder="Password">
+		<p>Date of Birth:<br>
+		<input class="loginInput" name="dob" type="date">
 		<br><br>
-		<input type="submit" value="Confirm">
+		<input class="loginBtn" type="submit" value="Confirm">
 		</form>
 	
 		<?php

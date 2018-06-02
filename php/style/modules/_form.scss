@@ -1,0 +1,42 @@
+.form {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	
+	.form__text {
+		background-color: transparent;
+		border: 2px solid $dark-slate-blue;
+		color: $white;
+		padding: 0.4rem;
+		transition: border-color 300ms ease;
+
+		&:focus {
+			border-color: $slate-blue;
+		}
+	}
+
+	.form__btn {
+		border: 0;
+		background-color: $tomato;
+		color: $white;
+		font-size: 1rem;
+		padding: 0.4rem;
+
+		&.--size-sm {
+			width: 25%;
+		}
+
+		&.--size-md {
+			width: 50%;
+		}
+
+		&.--size-full {
+			width: 100%;
+		}
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}

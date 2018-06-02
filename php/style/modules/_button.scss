@@ -1,0 +1,11 @@
+.btn {
+    border: 0;
+    background-color: $tomato;
+    color: $white;
+    font-size: 1rem;
+    padding: 0.4rem;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

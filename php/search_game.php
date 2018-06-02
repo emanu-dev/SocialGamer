@@ -5,7 +5,6 @@ session_start();
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
 	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
 	<title>Social Gamer - Search for Games</title>
 </head>
@@ -28,12 +27,14 @@ session_start();
 		include 'header.php';
 	?>
 
-	<div id="signBox">
-		<h1>Search for Game</h1><br>
-		<form action="search_game.php" method="get">
+<main id="main">
+	<div class="container slide-in-left">
+		<h1 class="main-headline">Buscar jogo</h1>
+
+		<form class="form" action="search_game.php" method="get">
 		<p>Type a game name to search the database, or <a href="add_game.php">add your own</a>:</p>
-		<input type="text" name="gamename" placeholder="Game"></p>
-		<input type="submit" value="Search">	
+		<input class="form__text" type="text" name="gamename" placeholder="Nome do jogo"></p>
+		<input class="form__btn --size-sm" type="submit" value="Search">	
 		
 		<?php
 				try {
@@ -79,7 +80,10 @@ session_start();
 				}
 
 		?>
-		<p><a href="user_page.php">Back to User Page</a>
+		<p><a href="user_page.php">Back to User Page</a>		
 	</div>
-</body>
-</html>
+</main>
+
+<?php 
+	include 'modules/footer.php';
+?>

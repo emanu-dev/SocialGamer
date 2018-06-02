@@ -1,16 +1,7 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-	<title>Social Gamer - User Dashboard</title>
-	<link rel="stylesheet" type="text/css" href="userStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-</head>
+
 <body>
 	<?php 
 		include 'db_conn_var.php';
@@ -95,7 +86,7 @@ session_start();
 			<article>
 				<div class="card">
 					<div class="card-header">
-						<h2 class="headline">Jogos</h2>
+						<h2 class="headline">Jogando agora</h2>
 					</div><!--card header-->
 					<div class="card-block">
 						<?php
@@ -136,6 +127,12 @@ session_start();
 								echo $e->getMessage();
 							}
 						?>
+						<div class="center-block">
+							<FORM METHOD="LINK" ACTION="search_game.php">
+							<INPUT class="btn" TYPE="submit" VALUE="Add New Game"></FORM>
+							<FORM METHOD="LINK" ACTION="edit_tags.php">
+							<INPUT class="btn" TYPE="submit" VALUE="Edit Tags"></FORM>
+						</div>
 					</div><!-- card-block -->
 					<div class="card-footer">
 					<ul class="nav">
@@ -152,10 +149,6 @@ session_start();
 							Backlog
 						</li>
 					</ul>
-					<FORM METHOD="LINK" ACTION="search_game.php">
-					<INPUT TYPE="submit" VALUE="Add New Game"></FORM>
-					<FORM METHOD="LINK" ACTION="edit_tags.php">
-					<INPUT TYPE="submit" VALUE="Edit Tags"></FORM>
 					</div><!-- card-footer -->
 				</div><!-- card -->
 			</article>
@@ -208,9 +201,9 @@ session_start();
 							}
 						?>
 						<FORM METHOD="LINK" ACTION="search_friend.php">
-						<INPUT TYPE="submit" VALUE="Add Friends"><br></FORM>
+						<INPUT class="btn" TYPE="submit" VALUE="Add Friends"><br></FORM>
 						<FORM METHOD="LINK" ACTION="friend_requests.php">
-						<INPUT TYPE="submit" VALUE="Friend Requests"><br></FORM>
+						<INPUT class="btn" TYPE="submit" VALUE="Friend Requests"><br></FORM>
 					</div>
 					<div class="card-footer">
 					</div><!-- card-footer -->
@@ -257,7 +250,7 @@ session_start();
 								}
 						?>
 						<FORM align="right" METHOD="LINK" ACTION="add_recommendation.php">
-						<INPUT TYPE="submit" VALUE="Add Recommendation"></FORM>
+						<INPUT class="btn" TYPE="submit" VALUE="Add Recommendation"></FORM>
 					</div><!-- card-block -->
 					<div class="card-footer">
 					</div><!-- card-footer -->
@@ -300,22 +293,12 @@ session_start();
 					}
 				?><br>
 				<FORM METHOD="LINK" ACTION="search_console.php">
-				<INPUT TYPE="submit" VALUE="Add New One"></FORM>
+				<INPUT class="btn" TYPE="submit" VALUE="Add New One"></FORM>
 			</div>
 
 	</div><!-- container -->
 </main>
 
-<footer>
-	<div class="footer">
-		
-	</div><!-- header -->
-</footer>
-
-<script src="js/app.js"></script>
-
-
-
-		
-</body>
-</html>
+<?php 
+	include 'modules/footer.php';
+?>

@@ -1,14 +1,6 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Add Console</title>
-</head>
 <body>
 	<?php 
 		include 'db_conn_var.php';
@@ -23,47 +15,13 @@ session_start();
 		}
 	?>
 	
-	<div id="header">
-		<img src="user.png" width="37px" height="37px"><?php
-			try {
-				
-				$conn = new mysqli($url, $username, $password, $dbname);
-
-				if ($conn->connect_error) {
-					throw new Exception($conn->connect_error);
-				}else {
-					
-				}
-
-				$query = "SELECT * FROM user WHERE userID='".$userid."'";
-				$result = $conn->query($query);
-
-				if ($row = $result->num_rows > 0)
-				{
-					while($row = $result->fetch_assoc()) 
-					{
-						echo $row["username"];
-						$date = strtotime($row["dob"]);
-						$final_dob = date("M/d/y", $date);
-						?>
-						<img src="calendar.png" width="37px" height="37px" >
-						<?php
-						echo "Birth: ".$final_dob;
-					}
-				}
-
-				$conn->close();	
-			}
-			catch(Exception $e)
-			{
-				echo $e->getMessage();
-			}?>
-
-		<a href="index.php?status=logout" style="float: right;">Logout</a>
-	</div>
+	<?php 
+		include 'header.php';
+	?>
 	
-	<div id="signBox">
-		<h1>Add Console</h1><br>
+	<main id="main">
+	<div class="container">
+		<h1 class="main-headline">Adicionar Console</h1>	
 		<?php
 
 			$consolename = null;
@@ -97,15 +55,16 @@ session_start();
 					echo $e->getMessage();
 				}
 			}else{
-				echo "<form action=\"add_console.php\" method=\"get\">";
-				echo "<input type=\"text\" name=\"cname\" placeholder=\"Console Name\">";
-				echo "<input type=\"text\" name=\"manufacturer\" placeholder=\"Manufacturer\">";
+				echo "<form class=\"form\" action=\"add_console.php\" method=\"get\">";
+				echo "<input class=\"form__text\" type=\"text\" name=\"cname\" placeholder=\"Console Name\">";
+				echo "<input class=\"form__text\" type=\"text\" name=\"manufacturer\" placeholder=\"Manufacturer\">";
 				echo "</select></p>";
-				echo "<input type=\"submit\" value=\"Submit\">";
+				echo "<input class=\"form__btn\"type=\"submit\" value=\"Submit\">";
 		}
 		?>
 		<p><a href="search_console.php">Back to Search Console Page</a>
 		<p><a href="user_page.php">Back to User Page</a>
-	</div>
+		</div>
+	</main>
 </body>
 </html>

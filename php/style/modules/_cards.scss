@@ -1,0 +1,111 @@
+.card {
+    animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba($dark-slate-blue, 0.125);
+    border-radius: 0.25rem;
+    box-shadow: 2px 2px 14px 0px rgba(0,0,0,0.25);
+  }
+  
+  .card-block {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+  }
+  
+  .card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #f7f7f9;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    &:first-child {
+      border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+    }
+  }
+  
+  .card-footer {
+    padding: 0.75rem 1.25rem;
+    background-color: #f7f7f9;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    &:last-child {
+      border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px);
+    }
+  }
+
+
+  /*=============================
+=            cards            =
+=============================*/
+
+.card {
+    border: 0;
+    margin-bottom: 2rem;
+    height: auto;
+    .nav {
+      flex-direction: column;
+    }
+    .card-header, .card-footer, .card-block {
+      background-color: #1A1A37;
+    }
+    &.contractors {
+      .card-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .fa {
+          font-size: 5rem;
+          &.warning {
+            color: #fc8f3e;
+          }
+        }
+      }
+      .card-footer {
+        display: flex;
+        justify-content: space-around;
+        .item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 1.3rem;
+          .warning {
+            color: #fc8f3e;
+          }
+          .info {
+            color: #57b0eb;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .card {
+      width: 100%;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .card .nav {
+      flex-direction: row;
+      .nav-item {
+        margin-right: .2rem;
+      }
+    }
+  }
+  
+  .badge {
+    width: 0.88rem;
+    height: 0.88rem;
+    display: inline-block;
+    &.primary {
+      background-color: #293541;
+    }
+    &.info {
+      background-color: #57b0eb;
+    }
+    &.warning {
+      background-color: #fc8f3e;
+    }
+  }
+  
+  /*=====  End of cards  ======*/

@@ -1,14 +1,6 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Search for Consoles</title>
-</head>
 <body>
 	<?php 
 		include 'db_conn_var.php';
@@ -28,13 +20,13 @@ session_start();
 		include 'header.php';
 	?>
 	
-	<div id="signBox">
-		<h1>Search for Console</h1><Br>
-		
-		<form action="search_console.php" method="get">
+	<main id="main">
+	<div class="container slide-in-left">
+		<h1 class="main-headline">Buscar Console</h1>		
+		<form class="form" action="search_console.php" method="get">
 		<p>Type a game name to search the database, or <a href="add_console.php">add your own</a>:
-		<input type="text" name="cname" placeholder="Console Name"></p>
-		<input type="submit" value="Search">	
+		<input class="form__text" type="text" name="cname" placeholder="Console Name"></p>
+		<input class="form__btn --size-sm" type="submit" value="Search">	
 		<?php
 
 			$consolename = null;
@@ -78,7 +70,10 @@ session_start();
 				echo $e->getMessage();
 			}
 		?>
+
 		<p><a href="user_page.php">Back to User Page</a>
+		</div>
+		</main>
 	</div>
 </body>
 </html>

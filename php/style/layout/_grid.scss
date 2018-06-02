@@ -1,0 +1,136 @@
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  
+  @media (min-width: 576px) {
+    .row {
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .row {
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .row {
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .row {
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+  }
+  
+  .container {
+    width: 100%;
+  }
+  
+  @media (min-width: 992px) {
+    .container {
+      width: 85%;
+      margin-left: 195px;
+    }
+  }
+  
+  .column-lg, .column-sm {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  
+  @media (min-width: 576px) {
+    .column-lg {
+      flex: 0 0 66.66667%;
+      max-width: 66.66667%;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 576px) {
+    .column-lg {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 768px) {
+    .column-lg {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 992px) {
+    .column-lg {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 1200px) {
+    .column-lg {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) {
+    .column-sm {
+      flex: 0 0 33.33333%;
+      max-width: 33.33333%;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 576px) {
+    .column-sm {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 768px) {
+    .column-sm {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 992px) {
+    .column-sm {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+  
+  @media (min-width: 576px) and (min-width: 1200px) {
+    .column-sm {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }

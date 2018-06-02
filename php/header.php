@@ -1,24 +1,24 @@
 <nav>
 	<div class="sidebar">
 		<div class="sidebar-header">
-			<img class="brand-logo" src="img/wegamr-logo-white.svg" alt="">
+			<img class="brand-logo" src="images/wegamr-logo-white.svg" alt="">
 		</div><!-- sidebar-header -->
 		
 			<ul class="nav">
 				<li class="nav-item">
-					<a href="#" class="nav-link">
+					<a href="user_page.php" class="nav-link">
 						<i class="fa fa-bar-chart"></i>
 						Dashboard
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#" class="nav-link">
+					<a href="search_game.php" class="nav-link">
 						<i class="fa fa-files-o"></i>
 						Biblioteca
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#" class="nav-link">
+					<a href="search_console.php" class="nav-link">
 						<i class="fa fa-calendar"></i>
 						Consoles
 					</a>
@@ -70,7 +70,7 @@
 								{
 									while($row = $result->fetch_assoc()) 
 									{
-										echo $row["username"];
+										// echo $row["username"];
 									}
 								}
 
