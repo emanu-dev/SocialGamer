@@ -1,14 +1,6 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Game Details</title>
-</head>
 <body>
 	<?php 
 		include 'db_conn_var.php';
@@ -28,87 +20,98 @@ session_start();
 		include 'header.php';
 	?>
 
-	<div id="signBox">
-		<div class="side">
-			<h3>Game Details</h3>
-			<?php
+	<main id="main">
+		<div class="container">
+			<h1>Detalhes do jogo</h1>
+			<div class="row results">
+					<?php
+						try {
+							$gameid = $_GET["gameId"];
+							$conn = new mysqli($url, $username, $password, $dbname);
 
-				try {
-					$gameid = $_GET["gameID"];
-					$conn = new mysqli($url, $username, $password, $dbname);
-
-					if ($conn->connect_error) {
-						throw new Exception($conn->connect_error);
-					}else {
-						
-					}
-					$query = "SELECT game.gameID, game.gname, game.publisher, game.rating, game.consolename, console.consoleID, console.cname FROM game INNER JOIN console ON game.consolename=console.consoleID WHERE game.gameID=\"".$gameid."\"";
-
-					$result = $conn->query($query);
-
-					if ($row = $result->num_rows > 0)
-					{
-							while($row = $result->fetch_assoc()) 
-							{
-							echo "<h2>".$row["gname"]."</h2>";
-							echo "by <i>".$row["publisher"]."</i>";
-							echo "<br>Rating: <br>";
-							$rating = $row["rating"];
-							if ($rating == "e"){
-								echo "<img src='images/ratingsymbol_e.png' alt='Rated E for Everyone'>";
-							}
+							if ($conn->connect_error) {
+								throw new Exception($conn->connect_error);
+							}else {
 								
-							if ($rating == "t")
-								{echo "<img src='images/ratingsymbol_t.png' alt='Rated T for Teens'>";}
-							if ($rating == "m")
-								{echo "<img src='images/ratingsymbol_m.png' alt='Rated M for Mature'>";}
-							if ($rating == "a")
-								{echo "<img src='images/ratingsymbol_ao.png' alt='Rated Ao for Adults Only'>";}
-						}
-					}
-					$conn->close();
-				}
-				catch(Exception $e)
-				{
-					echo $e->getMessage();
-				}
-			?>
-		</div>
-		
-		<div class="side">
-			<p><b>Recommendations: </b><br></p>
-			<div id="fixedBox">
-				<?php
-					try {
-						$gameid = $_GET["gameID"];
-						$conn = new mysqli($url, $username, $password, $dbname);
-
-						if ($conn->connect_error) {
-							throw new Exception($conn->connect_error);
-						}else {
-							
-						}
-						$query = "SELECT game.gameID, game.gname, recommendation.gameID, recommendation.userID, recommendation.rec FROM recommendation INNER JOIN game ON recommendation.gameID=game.gameID WHERE recommendation.gameID='".$gameid."';";
-							
-						$result = $conn->query($query);
-
-						if ($row = $result->num_rows > 0)
-						{
-							while($row = $result->fetch_assoc()) 
-							{
-								echo "<p><b>Game:</b> ".$row["gname"]."<br> <b>Recommendation:</b> <i>".$row["rec"]."</i></p>";
 							}
+							$query = "SELECT games.gameId, games.gname, games.rating, games.picture, games.release_date FROM games WHERE games.gameId=\"".$gameid."\"";
+
+							$result = $conn->query($query);
+
+							if ($row = $result->num_rows > 0)
+							{
+									while($row = $result->fetch_assoc()) 
+									{
+									echo "<h1>".$row["gname"]."</h1></div>";
+									echo "<div class='row results'>";
+									echo "<div class='column'>";
+									echo "<img class='game__img' src='" . $row["picture"] . "'><br>";
+									echo "</div>";
+									echo "<div class='column'>";
+									echo "<p>Data de Lançamento: " . $row["release_date"] . "</p>";
+									echo "<br>Faixa Etária: <br>";
+									$rating = $row["rating"];
+									if ($rating == "e"){
+										echo "<img src='images/ratingsymbol_e.png' alt='Rated E for Everyone'>";
+									}
+									if ($rating == "t")
+										{echo "<img src='images/ratingsymbol_t.png' alt='Rated T for Teens'>";}
+									if ($rating == "m")
+										{echo "<img src='images/ratingsymbol_m.png' alt='Rated M for Mature'>";}
+									if ($rating == "a")
+										{echo "<img src='images/ratingsymbol_ao.png' alt='Rated Ao for Adults Only'>";}
+									echo "</div>";
+									echo "</div>";
+								}
+							}
+							$conn->close();
 						}
-						$conn->close();
-					}
-					catch(Exception $e)
-					{
-						echo $e->getMessage();
-					}
-				?>
-			</div>
-			<p><a href="user_page.php">Back to User Page</a>
+						catch(Exception $e)
+						{
+							echo $e->getMessage();
+						}
+					?>
+
+				<hr>
+				<h1>Análises: </h1>
+				<div class="row results">
+					<div class="column-lg">
+						<ul>
+						<?php
+							try {
+								$gameid = $_GET["gameId"];
+								$conn = new mysqli($url, $username, $password, $dbname);
+
+								if ($conn->connect_error) {
+									throw new Exception($conn->connect_error);
+								}else {
+									
+								}
+								$query = "SELECT games.gameId, games.gname, recommendation.gameId, recommendation.userID, recommendation.rec FROM recommendation INNER JOIN games ON recommendation.gameId=games.gameId WHERE recommendation.gameId='".$gameid."';";
+									
+								$result = $conn->query($query);
+
+								if ($row = $result->num_rows > 0)
+								{
+									while($row = $result->fetch_assoc()) 
+									{
+										echo "<li>".$row["rec"]."</li>";
+									}
+								}
+								$conn->close();
+							}
+							catch(Exception $e)
+							{
+								echo $e->getMessage();
+							}
+						?>
+						</ul>
+					</div>
+				</div>
+			<p><a href="user_page.php">Voltar para Dashboard</a>
 		</div>
-	</div>
-</body>
-</html>
+	</main>
+	
+	<?php 
+	include 'modules/footer.php';
+	?>

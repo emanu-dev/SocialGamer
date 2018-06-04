@@ -24,13 +24,11 @@
 	<div class="container slide-in-left">
 		<h1 class="main-headline">Buscar Console</h1>		
 		<form class="form" action="search_console.php" method="get">
-		<p>Type a game name to search the database, or <a href="add_console.php">add your own</a>:
-		<input class="form__text" type="text" name="cname" placeholder="Console Name"></p>
-		<input class="form__btn --size-sm" type="submit" value="Search">	
+			<p>Digite um nome para buscar no banco</a>:
+			<input class="form__text" type="text" name="keyword" placeholder="Nome do Console"></p>
+			<input class="form__btn --size-sm" type="submit" value="Buscar">
+		</form>
 		<?php
-
-			$consolename = null;
-			$consoleToAddID = null;
 
 			try {
 					$conn = new mysqli($url, $username, $password, $dbname);
@@ -41,26 +39,72 @@
 						
 					}
 
-					if (isset($_GET["consoleID"]) && !empty($_GET["consoleID"])) {
-						$consoleToAddID = $_GET["consoleID"];
-						$query = "INSERT INTO owned_consoles (consoleID, userID) VALUES ('".$consoleToAddID."' , '".$userid."')";
-						$result = $conn->query($query);
-						echo "<br>Console sucessfully added!";						
-					}
+					if (isset($_POST["guid"]) && !empty($_POST["guid"])) {
 
-					if (isset($_GET["cname"]) && !empty($_GET["cname"])) {
-						$consolename = $_GET["cname"];
-						$query = "SELECT * FROM console WHERE cname LIKE \"%".$consolename."%\"";
-						$result = $conn->query($query);
+						$guid = $_POST["guid"];
+						$consolename = $_POST["consolename"];
+						$icon = $_POST["icon"];
+						$picture = $_POST["picture"];
+						$consoleToAddID = "";
 						
-						echo "<br>Consoles found:";
+						$query = "SELECT consoleID FROM consoles WHERE apiId ='" . $guid . "';";
+						$result = $conn->query($query);
+
+
+						if ($result->num_rows == 0)
+						{
+							$stmt = $conn->prepare("INSERT INTO consoles (apiId, cname, icon, picture) VALUES (?, ?, ?, ?)");
+							$stmt->bind_param("ssss", $guid, $consolename, $icon, $picture);
+							$stmt->execute();
+							$stmt->close();
+						}
+
+						$query = "SELECT consoleID FROM consoles WHERE apiId ='" . $guid . "';";
+						$result = $conn->query($query);
+							
 						if ($row = $result->num_rows > 0)
 						{
 							while($row = $result->fetch_assoc()) 
 							{
-								echo "<p><form action=\"search_console.php\" method=\"get\" >".$row["cname"]." <button name=\"consoleID\" type=\"submit\" value=\"".$row["consoleID"]."\"> Add</button></form></p>";
+								$consoleToAddID = $row["consoleID"];
 							}
-						}						
+						}
+
+						$stmt = $conn->prepare("INSERT INTO owned_consoles (consoleID, userID) VALUES (?,?)");
+						$stmt->bind_param("ss", $consoleToAddID, $userid);
+						$stmt->execute();
+						$stmt->close();
+
+						echo "<p>Console adicionado com sucesso</p>";
+					}
+
+					if (isset($_GET["keyword"]) && !empty($_GET["keyword"])) {
+						$consolename = $_GET["keyword"];
+
+						include 'modules/api_console_search.php';
+
+						$consolename = preg_replace('/\s+/', '_', $consolename);
+
+						$consolelist = new SimpleXMLElement(search_console($consolename));
+			
+						foreach ($consolelist->results->platform as $platform) {
+							echo "<div class='row results'>
+								<div class='column-sm'>
+								<img src='" . $platform->image->icon_url . "'>
+								</div>
+								<div class='column-lg'>
+								<form class='form--search-result' action='search_console.php' method='post'>
+								<input type='hidden' name='guid' value='". $platform->guid ."'>
+								<input type='hidden' name='consolename' value='". $platform->name ."'>
+								<input type='hidden' name='picture' value='". $platform->image->medium_url ."'>
+								<input type='hidden' name='icon' value='". $platform->image->icon_url ."'>
+								<label>". $platform->name ."</label> <br>
+								<input class='btn' type='submit' value='Adicionar'>
+								</form>
+								</div>
+								</div>";
+						}
+
 					}
 
 					$conn->close();
@@ -71,7 +115,7 @@
 			}
 		?>
 
-		<p><a href="user_page.php">Back to User Page</a>
+		<p><a href="user_page.php">Voltar para Dashboard</a>
 		</div>
 		</main>
 	</div>

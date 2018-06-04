@@ -1,99 +1,79 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Search Users</title>
-</head>
 <body>
 	<?php 
 		include 'db_conn_var.php';
 		$userid;
 	?>
 
-	<%
-			if (session.getAttribute("logged_userID") == null)
-			{
-	%>
-				<jsp:forward page="index.jsp?status=notlogged" />
-	<%
-			}
-	%>	
+	<?php
+		if (isset($_SESSION["logged_userID"])) {
+			$userid = $_SESSION["logged_userID"];
+		}else {
+			$url="index.php?status=notlogged";
+			echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
+		}
+	?>	
 	
-	<div id="header">
-		<img src="user.png" width="37px" height="37px"><%
+	<?php 
+		include 'header.php';
+	?>
+	<main id="main">
+	<div class="container slide-in-left">
+		<h1 class="main-headline">Buscar Usuário</h1>		
+		<form class="form" action="search_friend.php" method="get">
+			<p>Digite um nome para buscar no banco:
+			<input class="form__text" type="text" name="keyword" placeholder="Nome do Usuário"></p>
+			<input class="form__btn --size-sm" type="submit" value="Buscar">
+		</form>	
+		<?php
 			try {
-				userid = session.getAttribute("logged_userID").toString();
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				conn = DriverManager.getConnection(url, username, password);
-				stmt = conn.createStatement();
-				query = "SELECT * FROM user WHERE userID=\"" + userid + "\"";
-				ResultSet results = stmt.executeQuery(query);
+				$conn = new mysqli($url, $username, $password, $dbname);
 
-				while (results.next() == true)
-				{
-					out.println(results.getString("username"));
-					SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
-					Date dob = date_format.parse(results.getString("dob"));
-					date_format.applyPattern("MM/dd/yyyy");
-					String final_dob = date_format.format(dob);
-					%>
-					<img src="calendar.png" width="37px" height="37px" >
-					<%
-					out.println("Birth: " + final_dob);
+				if ($conn->connect_error) {
+					throw new Exception($conn->connect_error);
+				}else {
+					
 				}
-				conn.close();
-			}
-			catch (SQLException e) {
-				out.println(e);
-				e.printStackTrace();
-			}%>
-
-		<a href="index.jsp?status=logout" style="float: right;">Logout</a>
-	</div>
-	<div id="signBox">
-		<form action="search_friend.jsp" method="get">
-		<h1>Search Friend</h1><br>
-		<p>Type at least part of the username to search for a user:<br></a>
-		<input type="text" name="uname" placeholder="UserName"></p>
-		<input type="submit" value="Search">	
-		<%
-			String uname = request.getParameter("uname");
-			String friendToAddID = request.getParameter("friendID");
-			if ((uname != null))
-			{
-				try {
-					userid = session.getAttribute("logged_userID").toString();
-					Class.forName("com.mysql.jdbc.Driver").newInstance();
-					conn = DriverManager.getConnection(url, username, password);
-					stmt = conn.createStatement();
-					if (friendToAddID == null){
-						query = "SELECT * FROM user WHERE username LIKE \"%" + uname + "%\" and userID!='" + userid + "'";
-						ResultSet results = stmt.executeQuery(query);
-						out.println("<br>Users found:");
-						while (results.next() == true)
+				
+				if (isset($_GET["keyword"]) && !empty($_GET["keyword"])) {
+					$uname = $_GET['keyword'];
+					$query = "SELECT * FROM user WHERE username LIKE '%" . $uname . "%' and userID!='" . $userid . "'";
+					$result = $conn->query($query);
+					
+					if ($row = $result->num_rows > 0)
+					{
+						echo "<br>Usuários Encontrados:";
+						while($row = $result->fetch_assoc()) 
 						{
-							out.println("<p><form action=\"search_friend.jsp\" method=\"get\">" + results.getString("username") + " <button name=\"friendID\" type=\"submit\" value=\"" + results.getString("userID") + "\"> Send Friend Request </button></form></p>");
+							echo "<p><form action=\"search_friend.php\" method=\"get\">" . $row["username"] . "<br><button class='btn' name=\"friendID\" type=\"submit\" value=\"" .  $row["userID"] . "\"> Solicitar Amizade</button></form></p>";
+							echo "<hr>";
 						}
-					}else{
-						query = "INSERT INTO friend (requesterID, friendID, accepted) VALUES ('" + userid + "' , '" + friendToAddID + "' , '0')";
-						stmt.executeUpdate(query);
-						out.println("<br>Friend request sent!");
+					}else {
+						echo "<br>Nenhum usuário encontrado.";
 					}
-					conn.close();
 				}
-
-				catch (SQLException e) {
-					out.println(e);
-					e.printStackTrace();
+				
+				if (isset($_GET["friendID"]) && !empty($_GET["friendID"])){
+					$friendToAddID = $_GET['friendID'];
+					$query = "INSERT INTO friend (requesterID, friendID, accepted) VALUES ('" . $userid . "' , '" . $friendToAddID . "' , '0')";
+					$result = $conn->query($query);
+					echo "<br>Pedido de Amizade enviado!";
 				}
+				$conn->close();
 			}
-		%>
-		<p><a href="user_page.jsp">Back to User Page</a>
+
+			catch(Exception $e)
+			{
+				echo $e->getMessage();
+			}
+		?>
+		<p><a href="user_page.php">Voltar para Dashboard</a>
+		</div>
+		</main>
 	</div>
-</body>
-</html>
+	
+	<?php 
+	include 'modules/footer.php';
+	?>

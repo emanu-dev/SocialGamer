@@ -1,13 +1,6 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Search for Games</title>
-</head>
 <body>
 	<?php 
 		include 'db_conn_var.php';
@@ -30,12 +23,14 @@ session_start();
 <main id="main">
 	<div class="container slide-in-left">
 		<h1 class="main-headline">Buscar jogo</h1>
-
-		<form class="form" action="search_game.php" method="get">
-		<p>Type a game name to search the database, or <a href="add_game.php">add your own</a>:</p>
-		<input class="form__text" type="text" name="gamename" placeholder="Nome do jogo"></p>
-		<input class="form__btn --size-sm" type="submit" value="Search">	
 		
+		
+		<form class="form" action="search_game.php" method="get">
+			<p>Digite um nome para buscar no banco:
+			<input class="form__text" type="text" name="keyword" placeholder="Nome do jogo"></p>
+			<input class="form__btn --size-sm" type="submit" value="Buscar">
+		</form>
+		<!-- <div class="container"> -->
 		<?php
 				try {
 					$conn = new mysqli($url, $username, $password, $dbname);
@@ -46,30 +41,101 @@ session_start();
 						
 					}
 
-					if (isset($_GET["gameID"]) && !empty($_GET["gameID"])) {
-						$gameToAddID = $_GET["gameID"];
-						$query = "INSERT INTO owned_games (gameID, userID) VALUES ('".$gameToAddID."' , '".$userid."')";
-						$result = $conn->query($query);
-						echo "<Br>Game sucessfully added!";
+					if (isset($_POST["guid"]) && !empty($_POST["guid"])) {
+
+						$guid = $_POST["guid"];
+						$gamename = $_POST["gamename"];
+						$icon = $_POST["icon"];
+						$picture = $_POST["picture"];
+						$release = $_POST["release"];
+						$rating = $_POST["rating"];
+						$gameToAddID = "";
 						
+						echo $rating;
 
-						$query = "INSERT INTO tags(userID, gameID, tag) VALUES ('".$userid."', '".$gameToAddID."', 'Playing')";
+						$query = "SELECT gameId FROM games WHERE apiId ='" . $guid . "';";
 						$result = $conn->query($query);
-						echo "<br>Game was added with the tag Playing. If you wish, you can change its tag on your dashboard.";					
-					}
 
-					if (isset($_GET["gamename"]) && !empty($_GET["gamename"])) {
-						$gamename = $_GET["gamename"];
-						$query = "SELECT * FROM game WHERE gname LIKE \"%".$gamename."%\"";
+						if ($row = $result->num_rows == 0)
+						{
+							$stmt = $conn->prepare("INSERT INTO games (apiId, gname, icon, picture, release_date) VALUES (?, ?, ?, ?, ?)");
+							$stmt->bind_param("sssss", $guid, $gamename, $icon, $picture, $release);
+							$stmt->execute();
+							$stmt->close();
+						}
+
+						$query = "SELECT gameId FROM games WHERE apiId ='" . $guid . "';";
 						$result = $conn->query($query);
-						echo "<br>Games found:";
+							
 						if ($row = $result->num_rows > 0)
 						{
 							while($row = $result->fetch_assoc()) 
 							{
-							echo "<p><form action=\"search_game.php\" method=\"get\">".$row["gname"]." <button name=\"gameID\" type=\"submit\" value=\"".$row["gameID"]."\"> Add</button></form></p>";
+								$gameToAddID = $row["gameId"];
 							}
 						}
+
+						$stmt = $conn->prepare("INSERT INTO owned_games (gameId, userID) VALUES (?,?)");
+						$stmt->bind_param("ss", $gameToAddID, $userid);
+						$stmt->execute();
+						$stmt->close();
+
+						$query = "INSERT INTO tags(userID, gameId, tag) VALUES ('".$userid."', '".$gameToAddID."', 'Jogando')";
+						$result = $conn->query($query);
+						echo "<p>Jogo adicionado com sucesso!</p>";
+						echo "<p>Jogo foi adicionado com a Tag 'Jogando'. Se desejar, você pode altera-lá mais tarde.</p>";
+
+					}
+
+					if (isset($_GET["gameID"]) && !empty($_GET["gameID"])) {
+						$gameToAddID = $_GET["gameID"];
+						$query = "INSERT INTO owned_games (gameID, userID) VALUES ('".$gameToAddID."' , '".$userid."')";
+						$result = $conn->query($query);
+						echo "<Br>Jogo adicionado com sucesso!";
+						
+
+						$query = "INSERT INTO tags(userID, gameID, tag) VALUES ('".$userid."', '".$gameToAddID."', 'Playing')";
+						$result = $conn->query($query);
+						echo "<br>Jogo foi adicionado com a Tag 'Jogando'. Se desejar, você pode altera-lá mais tarde.";
+					}
+
+					if (isset($_GET["keyword"]) && !empty($_GET["keyword"])) {
+						$gamename = $_GET["keyword"];
+
+						include 'modules/api_game_search.php';
+
+						$gamename = preg_replace('/\s+/', '_', $gamename);
+
+						$gamelist = new SimpleXMLElement(search_game($gamename));
+			
+						foreach ($gamelist->results->game as $game) {
+							$release_date = new DateTime($game->original_release_date);
+							$release_date = $release_date->format('Y-m-d');
+							echo "<div class='row results'>
+								<div class='column-sm'>
+								<img src='" . $game->image->icon_url . "'>
+								</div>
+								<div class='column-lg'>
+								<form class='form--search-result' action='search_game.php' method='post'>
+								<input type='hidden' name='guid' value='". $game->guid ."'>
+								<input type='hidden' name='gamename' value='". $game->name ."'>
+								<input type='hidden' name='picture' value='". $game->image->medium_url ."'>
+								<input type='hidden' name='icon' value='". $game->image->icon_url ."'>
+								<input type='hidden' name='rating' value='". $game->original_game_rating ."'>
+								<input type='hidden' name='release' value='". $release_date ."'>
+								<label>". $game->name ."</label> <br>
+								<label>". $release_date ."</label> <br>
+								<select class='select' name='platform'>";
+								foreach ($game->platforms->platform as $platform){
+									echo "<option value='" . $platform->id ."'>" . $platform->name . "</option>";
+								}
+							echo "</select>
+								<input class='btn' type='submit' value='Adicionar'>
+								</form>
+								</div>
+								</div>";
+						}
+
 					$conn->close();
 					}
 				}
@@ -80,7 +146,8 @@ session_start();
 				}
 
 		?>
-		<p><a href="user_page.php">Back to User Page</a>		
+		<!-- </div> -->
+		<p><a href="user_page.php">Voltar para Dashboard</a>
 	</div>
 </main>
 

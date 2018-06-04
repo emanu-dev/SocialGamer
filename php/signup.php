@@ -16,14 +16,14 @@ session_start();
 	?>
 
 	<div class="signBox">
-		<h1>Create a New Account</h1><br><br>
+		<h1>Criar uma nova conta</h1><br><br>
 		<form action="signup.php" method="post">
-		<input class="loginInput" type="text" name="username" placeholder="Username">
-		<input class="loginInput" type="password" name="password" placeholder="Password">
-		<p>Date of Birth:<br>
+		<input class="loginInput" type="text" name="username" placeholder="Usuário">
+		<input class="loginInput" type="password" name="password" placeholder="Senha">
+		<p>Data de Nascimento:<br>
 		<input class="loginInput" name="dob" type="date">
 		<br><br>
-		<input class="loginBtn" type="submit" value="Confirm">
+		<input class="loginBtn" type="submit" value="Confirmar">
 		</form>
 	
 		<?php
@@ -46,7 +46,7 @@ session_start();
 					if($stmt = $conn->prepare("INSERT INTO user(username, password, dob) VALUES (?, ?, ?)")) {
 					    $stmt->bind_param('sss', $user, $pass, $dob);
 					    $stmt->execute();
-					    echo "Data for user ".$user." was inserted with success<br>";
+					    echo "Usuário \"".$user."\" criado com sucesso<br>";
 					} else {
 					    $error = $conn->errno . ' ' . $conn->error;
 					    echo $error;
@@ -60,7 +60,7 @@ session_start();
 					}
 			}
 		?>
-			<br><a href="index.php">Back to Log In Page</a>
+			<br><a href="index.php">Login</a>
 	</div>
 </body>
 </html>

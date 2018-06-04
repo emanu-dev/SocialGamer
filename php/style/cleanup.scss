@@ -108,65 +108,13 @@ a {
 }
 
 
-
-/*!
- *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
- *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
- */
-/* FONT PATH
- * -------------------------- */
-@font-face {
-  font-family: 'FontAwesome';
-  src: url("fonts/fontawesome-webfont.eot?v=4.7.0");
-  src: url("fonts/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
-  font-weight: normal;
-  font-style: normal;
+hr {
+  border: 0;
+  height: 1px;
+  background: $slate-gray;
+  background-image: linear-gradient(to right, rgba($slate-gray, 0.4), $slate-gray, rgba($slate-gray, 0.4));
 }
 
-
-.fa {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* makes the font 33% larger relative to the icon container */
-
-/* Deprecated as of 4.4.0 */
-
-/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
-   readers do not read off random characters that represent icons */
-
-.fa-user:before {
-  content: "";
-}
-
-.fa-calendar:before {
-  content: "";
-}
-
-.fa-bar-chart:before {
-  content: "";
-}
-
-.fa-files-o:before {
-  content: "";
-}
-
-.fa-bars:before {
-  content: "";
-}
-
-.fa-folder-o:before {
-  content: "";
-}
-
-.fa-user-o:before {
-  content: "";
-}
 
 .main-headline {
   margin-top: .5rem;
@@ -183,3 +131,51 @@ body {
   background-color: #16112e;
 }
 
+.results {
+  margin: 1rem 0;
+  padding: 0 1rem;
+  
+  .column-sm {
+    display: flex;
+    justify-content: center;
+    flex: 0 0 10%;
+  }
+}
+
+.game__img {
+  height: auto;
+  width: 50%;
+}
+
+.game-card {
+  align-items: center;
+  background-color: rgba(#16112e, 0.4);  
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: auto;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  transition: transform 300ms ease;
+
+  .game-image {
+    height: auto;
+    margin-bottom: 1rem;
+    width: 80%;
+  }
+
+  > a {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+  }
+
+  &:hover {
+    border: 2px solid #16112e;
+    transform: scale(1.05);
+  }
+}

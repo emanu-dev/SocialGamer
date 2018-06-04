@@ -7,31 +7,25 @@
 			<ul class="nav">
 				<li class="nav-item">
 					<a href="user_page.php" class="nav-link">
-						<i class="fa fa-bar-chart"></i>
+						<?php echo file_get_contents("images/icon/monitor.svg"); ?>
 						Dashboard
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="search_game.php" class="nav-link">
-						<i class="fa fa-files-o"></i>
+					<a href="game_library.php" class="nav-link">
+						<?php echo file_get_contents("images/icon/cartridge.svg"); ?>
 						Biblioteca
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="search_console.php" class="nav-link">
-						<i class="fa fa-calendar"></i>
+					<a href="console_library.php" class="nav-link">
+						<?php echo file_get_contents("images/icon/joystick.svg"); ?>
 						Consoles
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="fa fa-folder-o"></i>
-						Análises
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="fa fa-user"></i>
+					<a href="friend_list.php" class="nav-link">
+						<?php echo file_get_contents("images/icon/user.svg"); ?>
 						Amigos
 					</a>
 				</li>				
@@ -45,7 +39,7 @@
 		<div class="container">
 			<div class="offcanvas">
 				<a href="#" class="js-open-sidebar item">
-					<i class="fa fa-bars"></i>
+				<?php echo file_get_contents("images/icon/menu.svg"); ?>
 				</a>
 			</div><!--offcanvas-->
 
@@ -86,8 +80,10 @@
 			</div><!-- date-timer -->
 
 			<div class="user">
-				<img src="images/user-photo.png" alt="">
-				<a href="index.php?status=logout" style="float: right;">Logout</a>
+				<!-- <img src="images/user-photo.png" alt=""> -->
+				<a href="index.php?status=logout" style="float: right;">
+					<?php echo file_get_contents("images/icon/logout.svg"); ?>
+				</a>
 			</div><!-- user -->
 		</div><!-- container -->
 	</div><!-- header -->

@@ -28,7 +28,7 @@
 			<article>
 				<div class="card">
 					<div class="card-header">
-						<h2 class="headline">Usuário</h2>
+						<h1 class="headline">Resumo do Usuário</h1>
 					</div><!--card header-->
 					<div class="card-block">
 					<?php
@@ -51,7 +51,7 @@
 						{
 							while($row = $result->fetch_assoc()) 
 							{
-								echo "<h1>".$row["username"]."</h1>";
+								echo "<h1>Bem vindo, ".$row["username"]."!</h1>";
 							}
 						}
 						$conn->close();	
@@ -64,18 +64,6 @@
 					</div><!-- card-block -->
 					<div class="card-footer">
 					<ul class="nav">
-						<li class="nav-item">
-							<span class="badge warning"></span>
-							Jogando
-						</li>
-						<li class="nav-item">
-							<span class="badge info"></span>
-							Finalizado
-						</li>
-						<li class="nav-item">
-							<span class="badge primary"></span>
-							Backlog
-						</li>
 					</ul>
 					</div><!-- card-footer -->
 				</div><!-- card -->
@@ -86,7 +74,7 @@
 			<article>
 				<div class="card">
 					<div class="card-header">
-						<h2 class="headline">Jogando agora</h2>
+						<h1 class="headline">Jogando agora</h1>
 					</div><!--card header-->
 					<div class="card-block">
 						<?php
@@ -102,23 +90,22 @@
 									
 								}
 
-								$query = "SELECT game.gameID, game.gname, owned_games.gameID, owned_games.userID, tags.gameID, tags.tag, tags.userID FROM owned_games INNER JOIN game ON owned_games.gameID=game.gameID INNER JOIN tags ON game.gameID=tags.gameID WHERE owned_games.userID='".$userid."';";
-								
+								$query = "SELECT games.gameId, games.gname, games.picture, owned_games.gameId, owned_games.userID, tags.gameId, tags.tag, tags.userID FROM owned_games INNER JOIN games ON owned_games.gameId=games.gameId INNER JOIN tags ON games.gameId=tags.gameId WHERE owned_games.userId='".$userid."' AND tags.tag = 'Jogando' LIMIT 3";
+
 								$result = $conn->query($query);
 
-								echo "<table id=\"gameTable\">";
-								echo "<tr><th>Name</th><th>Tagged as</th></tr>";
+								echo "<div class='row'>";
 							if ($row = $result->num_rows > 0)
 							{
 								while($row = $result->fetch_assoc()) 
 								{
-									echo "<tr>";
-									echo "<td><a href=\"show_game.php?gameID=".$row["gameID"]."\">".$row["gname"]."</a></td>";
-									echo "<td>".$row["tag"]."</td>";
-									echo "</tr>";
+									echo "<div class='column-sm game-card'>";
+									echo "<a href=\"show_game.php?gameId=".$row["gameId"]."\"><img class='game-image' src='" . $row["picture"] . "'>";
+									echo $row["gname"]."</a>";
+									echo "</div>";
 								}
 							}
-								echo "</table>";
+								echo "</div>";
 								
 								$conn->close();
 							}
@@ -127,28 +114,11 @@
 								echo $e->getMessage();
 							}
 						?>
-						<div class="center-block">
-							<FORM METHOD="LINK" ACTION="search_game.php">
-							<INPUT class="btn" TYPE="submit" VALUE="Add New Game"></FORM>
-							<FORM METHOD="LINK" ACTION="edit_tags.php">
-							<INPUT class="btn" TYPE="submit" VALUE="Edit Tags"></FORM>
-						</div>
 					</div><!-- card-block -->
 					<div class="card-footer">
-					<ul class="nav">
-						<li class="nav-item">
-							<span class="badge info"></span>
-							Jogando
-						</li>
-						<li class="nav-item">
-							<span class="badge primary"></span>
-							Finalizado
-						</li>
-						<li class="nav-item">
-							<span class="badge warning"></span>
-							Backlog
-						</li>
-					</ul>
+						<form align="right" method="LINK" action="edit_tags.php">
+							<input class="btn" type="submit" value="Editar Tags">
+						</form>
 					</div><!-- card-footer -->
 				</div><!-- card -->
 			</article>
@@ -160,7 +130,7 @@
 			<article>
 				<div class="card contractors">
 					<div class="card-header">
-						<h2 class="headline">Amigos</h2>
+						<h1 class="headline">Solicitações de Amizade</h1>
 					</div><!--card header-->
 					<div class="card-block">
 							<?php
@@ -176,7 +146,7 @@
 									
 								}
 
-								$query = "SELECT f.friendID, f.requesterID, fu.username as fu_name, ru.username as ru_name, f.accepted FROM friend f INNER JOIN user fu ON fu.userID = f.friendID INNER JOIN user ru ON ru.userID = f.requesterID WHERE (f.requesterID=".$userid." OR f.friendID=".$userid.") AND f.accepted=1;";
+								$query = "SELECT f.friendID, f.requesterID, fu.username as fu_name, ru.username as ru_name, f.accepted FROM friend f INNER JOIN user fu ON fu.userID = f.friendID INNER JOIN user ru ON ru.userID = f.requesterID WHERE (f.requesterID=".$userid." OR f.friendID=".$userid.") AND f.accepted=0;";
 								
 								$result = $conn->query($query);
 
@@ -185,11 +155,11 @@
 								{
 									while($row = $result->fetch_assoc()) 
 									{
-										if (intval($row["f.friendID"]) == intval($userid))
+										if (intval($row["friendID"]) == intval($userid))
 										{
-											echo "<a href=\"show_user.php?friendID=".$row["f.requesterID"]."\">".$row["ru_name"]."</a><br>";
+											echo "<a href=\"show_user.php?friendID=".$row["requesterID"]."\">".$row["ru_name"]."</a><br>";
 										}else{
-											echo "<a href=\"show_user.php?friendID=".$row["f.friendID"]."\">".$row["fu_name"]."</a><br>";
+											echo "<a href=\"show_user.php?friendID=".$row["friendID"]."\">".$row["fu_name"]."</a><br>";
 										}
 									}
 								}
@@ -200,12 +170,11 @@
 								echo $e->getMessage();
 							}
 						?>
-						<FORM METHOD="LINK" ACTION="search_friend.php">
-						<INPUT class="btn" TYPE="submit" VALUE="Add Friends"><br></FORM>
-						<FORM METHOD="LINK" ACTION="friend_requests.php">
-						<INPUT class="btn" TYPE="submit" VALUE="Friend Requests"><br></FORM>
 					</div>
 					<div class="card-footer">
+						<form method="LINK" action="search_friend.php">
+							<input class="btn" type="submit" value="Adicionar Amigos">
+						</form>						
 					</div><!-- card-footer -->
 				</div><!-- card -->
 			</article>
@@ -215,7 +184,7 @@
 			<article>
 				<div class="card">
 					<div class="card-header">
-						<h2 class="headline">Análises</h2>
+						<h1 class="headline">Suas Análises</h1>
 					</div><!--card header-->
 					<div class="card-block">
 						<?php
@@ -231,7 +200,7 @@
 									
 								}
 								
-								$query = "SELECT game.gameID, game.gname, recommendation.gameID, recommendation.userID, recommendation.rec FROM recommendation INNER JOIN game ON recommendation.gameID=game.gameID WHERE recommendation.userID='".$userid."';";
+								$query = "SELECT games.gameId, games.gname, games.icon, recommendation.gameId, recommendation.userID, recommendation.rec FROM recommendation INNER JOIN games ON recommendation.gameId=games.gameId WHERE recommendation.userID='".$userid."';";
 								
 								$result = $conn->query($query);
 
@@ -239,7 +208,15 @@
 								{
 									while($row = $result->fetch_assoc()) 
 									{
-										echo "<p><b>Game</b>: ".$row["gname"]."<br> Your Recommendation: <i>".$row["rec"]."</i></p>";
+										echo "<div class='row results'>
+										<div class='column-sm'>
+										<img src='" . $row['icon'] . "'>
+										</div>
+										<div class='column-lg'>
+										<a href='show_game.php?gameId=".$row["gameId"]."'>". $row['gname'] ."</a><br>
+										<em>" . $row['rec'] . "</em><br>
+										</div>
+										</div>";
 									}
 								}
 								$conn->close();
@@ -249,53 +226,16 @@
 									echo $e->getMessage();
 								}
 						?>
-						<FORM align="right" METHOD="LINK" ACTION="add_recommendation.php">
-						<INPUT class="btn" TYPE="submit" VALUE="Add Recommendation"></FORM>
 					</div><!-- card-block -->
 					<div class="card-footer">
+						<form align="right" method="LINK" action="add_recommendation.php">
+							<input class="btn" type="submit" value="Nova Análise">
+						</form>						
 					</div><!-- card-footer -->
 				</div><!-- card -->
 			</article>	
 			</div> <!-- column -->
 		</div> <!-- row -->
-
-			<div id="consoles">
-				Your owned consoles: <br> 
-				<?php
-					try {
-						
-						$userid = $_SESSION["logged_userID"];
-
-						$conn = new mysqli($url, $username, $password, $dbname);
-
-						if ($conn->connect_error) {
-							throw new Exception($conn->connect_error);
-						}else {
-							
-						}
-						
-						$query = "SELECT console.consoleID, console.cname, owned_consoles.consoleID, owned_consoles.userID FROM owned_consoles INNER JOIN console ON owned_consoles.consoleID=console.consoleID WHERE owned_consoles.userID=".$userid.";";
-						
-						$result = $conn->query($query);
-
-						if ($row = $result->num_rows > 0)
-						{
-							while($row = $result->fetch_assoc()) 
-							{
-								echo "<a href=\"show_console.php?consoleID=".$row["consoleID"]."\">".$row["cname"]."</a> - ";
-							}
-						}
-						$conn->close();
-					}
-					catch(Exception $e)
-					{
-						echo $e->getMessage();
-					}
-				?><br>
-				<FORM METHOD="LINK" ACTION="search_console.php">
-				<INPUT class="btn" TYPE="submit" VALUE="Add New One"></FORM>
-			</div>
-
 	</div><!-- container -->
 </main>
 

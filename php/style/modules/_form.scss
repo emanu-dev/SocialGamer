@@ -4,6 +4,11 @@
 	flex-direction: column;
 	width: 100%;
 	
+	.form--search-result {
+		flex-direction: row;
+		justify-content: flex-start;
+	}
+
 	.form__text {
 		background-color: transparent;
 		border: 2px solid $dark-slate-blue;

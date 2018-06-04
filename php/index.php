@@ -25,12 +25,12 @@ session_start();
 				if (($_GET['status']) == "logout")
 				{
 					$_SESSION["logged_userID"] = null;
-					echo "<p style='color: #ffffff'>Thank you for using Social Gamer!</p>";
+					echo "<p style='color: #ffffff'>Obrigado por usar o WeGaMR!</p>";
 				}
 				
 				if (($_GET['status']) == "notlogged")
 				{
-					echo "<p style='color: #ffffff'>Please login to access this content.</p>";
+					echo "<p style='color: #ffffff'>Faça login para acessar este conteúdo.</p>";
 				}
 			}
 
@@ -64,7 +64,7 @@ session_start();
 			$query = "CREATE TABLE IF NOT EXISTS recommendation(userID int, gameID int, rec text, FOREIGN KEY userID(userID) REFERENCES user(userID), FOREIGN KEY (gameID) REFERENCES game(gameID));";				
 			mysqli_query($conn, $query);
 			
-			$query = "CREATE TABLE IF NOT EXISTS tags(userID int, gameID int, tag varchar(10), FOREIGN KEY (userID) REFERENCES user(userID), FOREIGN KEY (gameID) REFERENCES game(gameID));";		
+			$query = "CREATE TABLE IF NOT EXISTS tags(userID int, gameID int, tag varchar(10), FOREIGN KEY (userID) REFERENCES user(userID), FOREIGN KEY (gameID) REFERENCES game(gameID));";
 			mysqli_query($conn, $query);
 			
 			mysqli_close($conn);	
@@ -75,12 +75,12 @@ session_start();
 		}
 	?>
 	<div class="box-wrapper">
-		<div class="signBox">
+		<div class="signBox flip-in-ver-right">
 			<img class="main-logo" src="images/wegamr-logo-purple.svg">
 			<p class="logo-title">WeGaMR</p>
 			<form action="index.php" method="post">
-				<input class="loginInput" type="text" name="username" placeholder="Username">
-				<input class="loginInput" type="password" name="password" placeholder="Password">
+				<input class="loginInput" type="text" name="username" placeholder="Usuário">
+				<input class="loginInput" type="password" name="password" placeholder="Senha">
 				<input class="loginBtn" type="submit" value="Log In">
 			</form>
 			
@@ -109,7 +109,7 @@ session_start();
 								   echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
 								}
 							}else{
-								echo "<br>Wrong username/password combination. <br> If you do not have an account, click on Sign Up.<br>";
+								echo "<br>Combinação de senha e usuário incorreta. <br> Se você não possui um conta, clique em Se Inscrever.<br>";
 							}
 						$conn->close();	
 					}
@@ -120,7 +120,7 @@ session_start();
 				} 			
 			}
 			?>
-			<p class="text --regular --small">Don't have an account? <a href="signup.php">Sign up</a></p>
+			<p class="text --regular --small">Não possui uma conta? <a href="signup.php">Se Inscrever</a></p>
 		</div>
 	</div>
 </body>

@@ -1,14 +1,6 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Edit Tags</title>
-</head>
 <body>
 
 	<?php 
@@ -29,12 +21,10 @@ session_start();
 	<?php 
 		include 'header.php';
 	?>
-
-	<div id="signBox">
-		<h1>Edit Tags</h1><br>
-		<p>Your games: <br>
+<main id="main">
+	<div class="container slide-in-left">
+		<h1 class="main-headline">Editar Tags</h1>
 		<?php
-				
 				try {
 					$conn = new mysqli($url, $username, $password, $dbname);
 
@@ -50,35 +40,35 @@ session_start();
 						$gameid = $_GET["gameID"];
 						$tag = $_GET["tag"];
 						
-						$query = "UPDATE tags SET tag='".$tag."' WHERE userID='".$userid."' AND gameID='".$gameid."'";
+						$query = "UPDATE tags SET tag='".$tag."' WHERE userID='".$userid."' AND gameId='".$gameid."'";
 						$result = $conn->query($query);
-						echo "<br><b>Tag updated!</b>";	
+						echo "<br><b>Tag atualizada!</b>";	
 					}else{	
-						$query = "SELECT game.gameID, game.gname, owned_games.gameID, owned_games.userID FROM owned_games INNER JOIN game ON owned_games.gameID=game.gameID WHERE owned_games.userID='".$userid."';";
+						$query = "SELECT games.gameId, games.gname, owned_games.gameId, owned_games.userID FROM owned_games INNER JOIN games ON owned_games.gameId=games.gameId WHERE owned_games.userID='".$userid."';";
 						$result = $conn->query($query);
 
-						echo "<form action='edit_tags.php' method='get'>";
+						echo "<form class='form' action='edit_tags.php' method='get'>";
 						echo "<input type='hidden' name='edit' value='1'>";
-						echo "<p>Your Games:";
-						echo "<select name='gameID'>";
+						echo "<p>Escolha o jogo: ";
+						echo "<select class='select' name='gameID'>";
 
 						if ($row = $result->num_rows > 0)
 						{
 							while($row = $result->fetch_assoc()) 
 							{
-								$gvalue = $row["gameID"];
+								$gvalue = $row["gameId"];
 								$gname = $row["gname"];
 								echo "<option value='".$gvalue."'>".$gname."</option>";
 							}
 						}
 						echo "</select>";
-						echo "<p>Tag to apply:";
-						echo "<select name='tag'>";
-						echo "<option value='Playing'>Playing</option>";
-						echo "<option value='Finished'>Finished</option>";
-						echo "<option value='OnBacklog'>OnBacklog</option>";
+						echo "<p>Tag para alterar: ";
+						echo "<select class='select' name='tag'>";
+						echo "<option value='Jogando'>Jogando</option>";
+						echo "<option value='Finalizado'>Finalizado</option>";
+						echo "<option value='Parado'>Parado</option>";
 						echo "</select><br><br><Br>";
-						echo "<input type='submit' value='Save'>";
+						echo "<input class='form__btn' type='submit' value='Salvar'>";
 					}
 				}
 				catch(Exception $e)
@@ -87,7 +77,8 @@ session_start();
 				}
 		?>
 
-		<p><a href="user_page.php">Back to User Page</a>
-	</div>
+		<p><a href="user_page.php">Voltar para Dashboard</a>
+		</div>
+	</main>
 </body>
 </html>

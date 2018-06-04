@@ -1,14 +1,6 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="personStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - User Page</title>
-</head>
 <body>
 	<?php 
 		include 'db_conn_var.php';

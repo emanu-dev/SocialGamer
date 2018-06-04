@@ -41,6 +41,11 @@
     border: 0;
     margin-bottom: 2rem;
     height: auto;
+
+    .headline {
+      font-size: 1.2rem;
+    }
+
     .nav {
       flex-direction: column;
     }

@@ -1,14 +1,6 @@
-<?php
-// Start the session
-session_start();
+<?php 
+	include 'modules/head.php';
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="indexStyle.css">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
-	<title>Social Gamer - Console Details</title>
-</head>
 <body>
 	<?php 
 		include 'db_conn_var.php';
@@ -27,79 +19,48 @@ session_start();
 	<?php 
 		include 'header.php';
 	?>
-	
-	<div id="signBox">
-		<div class="side">
-			<h3>Console Details</h3>
-			<?php
 
-				try {
-					$consoleid = $_GET["consoleID"];
-					
-					$conn = new mysqli($url, $username, $password, $dbname);
+	<main id="main">
+		<div class="container">
+			<h1>Detalhes do jogo</h1>
+			<div class="row results">
+					<?php
+						try {
+							$consoleid = $_GET["consoleId"];
+							$conn = new mysqli($url, $username, $password, $dbname);
 
-					if ($conn->connect_error) {
-						throw new Exception($conn->connect_error);
-					}else {
-						
-					}
+							if ($conn->connect_error) {
+								throw new Exception($conn->connect_error);
+							}else {
+								
+							}
+							$query = "SELECT consoles.consoleId, consoles.cname, consoles.picture FROM consoles WHERE consoles.consoleId=\"".$consoleid."\"";
 
-					$query = "SELECT * FROM console WHERE console.consoleID='".$consoleid."'";
-					$result = $conn->query($query);
+							$result = $conn->query($query);
 
-					if ($row = $result->num_rows > 0)
-					{
-						while($row = $result->fetch_assoc()) 
-						{
-							echo "<h1>".$row["cname"]."</h1><br>";
-							echo "by <i>".$row["manufacturer"]."</i>";
-						}
-					}
-
-					$conn->close();
-				}
-				catch(Exception $e)
-				{
-					echo $e->getMessage();
-				}
-			?>
-		</div>
-
-		<div class="side">
-			<p>Games registered for this console: <br></p>
-			<div id="fixedBox">
-				<?php
-					try {
-						$consoleid = $_GET["consoleID"];
-	
-						$conn = new mysqli($url, $username, $password, $dbname);
-
-						if ($conn->connect_error) {
-							throw new Exception($conn->connect_error);
-						}else {
-							
-						}
-						$query = "SELECT game.gameID, game.gname, game.publisher, game.rating, game.consolename, console.consoleID, console.cname FROM game INNER JOIN console ON game.consolename=console.consoleID WHERE console.consoleID=\"".$consoleid."\"";
-	
-						$result = $conn->query($query);
-
-						if ($row = $result->num_rows > 0)
-						{
-							while($row = $result->fetch_assoc()) 
+							if ($row = $result->num_rows > 0)
 							{
-								echo "<a href=\"show_game.jsp?gameID=".$row["gameID"]."\">".$row["gname"]."</a><br>";
+									while($row = $result->fetch_assoc()) 
+									{
+									echo "<h1>".$row["cname"]."</h1></div>";
+									echo "<div class='row results'>";
+									echo "<div class='column'>";
+									echo "<img class='console__img' src='" . $row["picture"] . "'><br>";
+									echo "</div>";
+								}
 							}
 							$conn->close();
 						}
-					}
-					catch(Exception $e)
-					{
-						echo $e->getMessage();
-					}
-				?>
-			</div>
-			<p><a href="user_page.php">Back to User Page</a>
+						catch(Exception $e)
+						{
+							echo $e->getMessage();
+						}
+					?>
+				</div>
+			<p><a href="user_page.php">Voltar para Dashboard</a>
 		</div>
-	</div>
-</body>
-</html>
+	</main>
+	
+	<?php 
+	include 'modules/footer.php';
+	?>
