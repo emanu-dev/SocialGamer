@@ -49,19 +49,6 @@
 									echo "</div>";
 									echo "<div class='column'>";
 									echo "<p>Data de Lançamento: " . $row["release_date"] . "</p>";
-									echo "<br>Faixa Etária: <br>";
-									$rating = $row["rating"];
-									if ($rating == "e"){
-										echo "<img src='images/ratingsymbol_e.png' alt='Rated E for Everyone'>";
-									}
-									if ($rating == "t")
-										{echo "<img src='images/ratingsymbol_t.png' alt='Rated T for Teens'>";}
-									if ($rating == "m")
-										{echo "<img src='images/ratingsymbol_m.png' alt='Rated M for Mature'>";}
-									if ($rating == "a")
-										{echo "<img src='images/ratingsymbol_ao.png' alt='Rated Ao for Adults Only'>";}
-									echo "</div>";
-									echo "</div>";
 								}
 							}
 							$conn->close();

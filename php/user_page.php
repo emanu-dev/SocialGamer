@@ -100,7 +100,7 @@
 								while($row = $result->fetch_assoc()) 
 								{
 									echo "<div class='column-sm game-card'>";
-									echo "<a href=\"show_game.php?gameId=".$row["gameId"]."\"><img class='game-image' src='" . $row["picture"] . "'>";
+									echo "<a href='show_game.php?gameId=".$row["gameId"]."'><img class='game-image' src='" . $row["picture"] . "'>";
 									echo $row["gname"]."</a>";
 									echo "</div>";
 								}
@@ -157,9 +157,9 @@
 									{
 										if (intval($row["friendID"]) == intval($userid))
 										{
-											echo "<a href=\"show_user.php?friendID=".$row["requesterID"]."\">".$row["ru_name"]."</a><br>";
+											echo "<p class='add-friend' data-user='".$row["requesterID"]."'>".$row["ru_name"]."</p>";
 										}else{
-											echo "<a href=\"show_user.php?friendID=".$row["friendID"]."\">".$row["fu_name"]."</a><br>";
+											echo "<p class='add-friend' data-user='".$row["friendID"]."'>".$row["fu_name"]."</p>";
 										}
 									}
 								}
@@ -170,6 +170,7 @@
 								echo $e->getMessage();
 							}
 						?>
+						<p id='txtHint'></p>
 					</div>
 					<div class="card-footer">
 						<form method="LINK" action="search_friend.php">

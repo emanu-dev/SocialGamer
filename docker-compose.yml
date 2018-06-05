@@ -1,0 +1,44 @@
+version: '2'
+
+volumes:
+  wegamr-mysql-data:
+    driver: local
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: wegamr-mysql
+    volumes:
+      - wegamr-mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=comp5000
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=root
+
+  server:
+    image: nginx
+    container_name: wegamr-server
+    ports:
+      - "8081:80"
+      - "443:443"
+    volumes:
+      - ./php:/php
+      - ./site.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - code-network
+    links:
+      - mysql:mysql
+
+  php:
+    image: f6c62de8e7c3
+    volumes:
+      - ./php:/php
+    networks:
+      - code-network
+
+networks:
+    code-network:
+        driver: bridge

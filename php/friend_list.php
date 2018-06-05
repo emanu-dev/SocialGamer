@@ -51,16 +51,16 @@
 						{
 							echo "<div class='row results'>
 								<div class='column-sm'>
-								<img src='" . $row['icon'] . "'>
+								<img class='img-user' src='images/user-placeholder.png'>
 								</div>
 								<div class='column-lg'>
 								<form class='form--search-result' action='friend_list.php' method='get'>
-								<input type='hidden' name='friendIdDelete' value='". $row['friendId'] ."'>
-								<a href='show_user.php?userId=".$row["friendId"]."'>". $row['cname'] ."</a><br>
+								<p style='text-align:left'>". $row['fu_name'] ."</p><br>
 								<input class='btn' type='submit' value='Deletar'>
 								</form>
 								</div>
-								</div>";
+								</div>
+								<hr>";
 						}
 					}
 
