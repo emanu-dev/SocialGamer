@@ -80,5 +80,6 @@
 		<p><a href="user_page.php">Voltar para Dashboard</a>
 		</div>
 	</main>
-</body>
-</html>
+<?php 
+	include 'modules/footer.php';
+?>
