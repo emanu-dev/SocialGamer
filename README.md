@@ -1,9 +1,14 @@
 # WeGamr
 A Social Network devoted to gamers at heart!
 
-For this project to work, the mysql installed on the machine should have the following database:
-> Database name: comp5000
-> username:	root
-> password:	root
+## JSP Version
+### Description
+Coming Soon
 
-The tables are created on the index page, so there is no need for extra sql scripts.
+## PHP Version
+### Description
+Coming Soon
+
+### Instructions
+* Import `wegamr-data.sql` into a MySQL DB `wegamr-data`.
+* Edit `db_conn_var.php` to set the DB user and password.
