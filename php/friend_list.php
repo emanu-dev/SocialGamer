@@ -53,8 +53,8 @@
 									</div>
 									<div class='column-lg'>
 										<p style='text-align:left'><?php echo $relation->getFriend($friend)->getUsername()?></p>
-										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='block'>Bloquear</button>
-										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unfriend'>Remover</button>
+										<button class='btn add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='block'>Bloquear</button>
+										<button class='btn add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unfriend'>Remover</button>
 									</div>
 								</div>
 								<hr>					
@@ -73,7 +73,7 @@
 									</div>
 									<div class='column-lg'>
 										<p style='text-align:left'><?php echo $relation->getFriend($friendRequest)->getUsername();?></p>
-										<button class='add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='cancel'>Cancelar Solicitação</button>
+										<button class='btn add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='cancel'>Cancelar Solicitação</button>
 									</div>
 								</div>
 								<hr>								
@@ -92,8 +92,8 @@
 									</div>
 									<div class='column-lg'>
 									<p style='text-align:left'><?php echo $relation->getFriend($friendRequest)->getUsername();?></p>
-										<button class='add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='add'>Adicionar</button>
-										<button class='add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='reject'>Rejeitar</button>
+										<button class='btn add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='add'>Adicionar</button>
+										<button class='btn add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='reject'>Rejeitar</button>
 									</div>
 								</div>
 								<hr>
@@ -113,8 +113,8 @@
 									</div>
 									<div class='column-lg'>
 										<p style='text-align:left'><?php echo $relation->getFriend($friend)->getUsername()?></p>
-										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unblock'>Desbloquear</button>
-										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unfriend'>Remover</button>
+										<button class='btn add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unblock'>Desbloquear</button>
+										<button class='btn add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unfriend'>Remover</button>
 									</div>
 								</div>
 								<hr>					
