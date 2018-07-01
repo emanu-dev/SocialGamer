@@ -4,6 +4,9 @@
 <body>
 	<?php 
 		include 'db_conn_var.php';
+		include_once 'modules/user.handler.php';
+		include_once 'modules/games.handler.php';
+		include_once 'modules/console.handler.php';			
 		$userid;
 	?>
 

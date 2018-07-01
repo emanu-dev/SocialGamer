@@ -4,6 +4,8 @@
 <body>
 	<?php 
 		include 'db_conn_var.php';
+		include_once 'modules/user.handler.php';
+		include_once 'modules/games.handler.php';
 		$userid;
 	?>
 
@@ -30,7 +32,6 @@
 			<input class="form__text" type="text" name="keyword" placeholder="Nome do jogo"></p>
 			<input class="form__btn --size-sm" type="submit" value="Buscar">
 		</form>
-		<!-- <div class="container"> -->
 		<?php
 				try {
 					$conn = new mysqli($url, $username, $password, $dbname);
@@ -146,7 +147,6 @@
 				}
 
 		?>
-		<!-- </div> -->
 		<p><a href="user_page.php">Voltar para Dashboard</a>
 	</div>
 </main>

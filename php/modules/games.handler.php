@@ -103,9 +103,9 @@
             $resultObj = $db->query('SELECT * FROM `games` ' . 
                         'WHERE `games`.`gameId` = ' . (int) $id);
             $game_details = $resultObj->fetch_assoc();
-            $user = new Game();
-            $user->arrToGame($game_details);
-            return $user;
+            $game = new Game();
+            $game->arrToGame($game_details);
+            return $game;
 				}
 				
 				public function arrToGame($gameRow) {
@@ -116,8 +116,8 @@
 							$this->setApiId($gameRow['apiId']) : '';
 							isset($gameRow['gname']) ? 
 							$this->setName($gameRow['gname']) : '';
-							isset($gameRow['iconSrc']) ? 
-							$this->setIconSrc($gameRow['iconSrc']) : '';
+							isset($gameRow['icon']) ? 
+							$this->setIconSrc($gameRow['icon']) : '';
 							isset($gameRow['picture']) ? 
 							$this->setPictureSrc($gameRow['picture']) : '';
 							isset($gameRow['rating']) ? 

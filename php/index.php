@@ -6,9 +6,9 @@ session_start();
 <html lang='pt-br'>
 <head>
 	<meta charset="utf-8">
-	<!-- <link rel="stylesheet" type="text/css" href="style/indexStyle.css"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Wegamr</title>
+	<link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
 	<video autoplay muted loop poster="images/bg-poster.JPG" class="bg-video" id="bgVideo">
@@ -85,5 +85,4 @@ session_start();
 		</div>
 	</div>
 </body>
-<script src="style/bundle.js"></script>
 </html>

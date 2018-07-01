@@ -6,8 +6,7 @@ session_start();
 <html lang='pt-br'>
 <head>
 	<meta charset="utf-8">
-	<!-- <link rel="stylesheet" type="text/css" href="style/indexStyle.css"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Wegamr</title>
-	<script src="style/bundle.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
