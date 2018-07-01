@@ -9,6 +9,7 @@ session_start();
 	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Wegamr</title>
+	<script src="style/bundle.js"></script>
 </head>
 <body>
 	<?php 

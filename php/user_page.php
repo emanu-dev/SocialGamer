@@ -4,7 +4,11 @@
 
 <body>
 	<?php 
-		include 'db_conn_var.php';
+		include_once 'db_conn_var.php';
+		include_once 'modules/user.handler.php';
+		include_once 'modules/games.handler.php';
+		include_once 'modules/relationship.handler.php';
+		include_once 'modules/friend.relation.handler.php'; 
 		$userid;
 	?>
 
@@ -29,31 +33,24 @@
 				<div class="card">
 					<div class="card-header">
 						<h1 class="headline">Resumo do Usuário</h1>
-					</div><!--card header-->
+					</div>
 					<div class="card-block">
 					<?php
+
 					try {
-						
-						$userid = $_SESSION["logged_userID"];
-
 						$conn = new mysqli($url, $username, $password, $dbname);
-
+					 
 						if ($conn->connect_error) {
 							throw new Exception($conn->connect_error);
 						}else {
 							
 						}
 
-						$query = "SELECT * FROM user WHERE userID='".$userid."'";
-						$result = $conn->query($query);
+						$currentUser = new User();
+						$currentUser = $currentUser->getUser($conn, $userid);
+						
+						echo "<h1>Bem vindo, ".$currentUser->getUsername()."!</h1>";
 
-						if ($row = $result->num_rows > 0)
-						{
-							while($row = $result->fetch_assoc()) 
-							{
-								echo "<h1>Bem vindo, ".$row["username"]."!</h1>";
-							}
-						}
 						$conn->close();	
 					}
 					catch(Exception $e)
@@ -61,27 +58,25 @@
 						echo $e->getMessage();
 					}
 					?>
-					</div><!-- card-block -->
+					</div>
 					<div class="card-footer">
 					<ul class="nav">
 					</ul>
-					</div><!-- card-footer -->
-				</div><!-- card -->
+					</div>
+				</div>
 			</article>
-			</div><!-- column -->
+			</div>
 
 			<div class="column-lg">
 			<article>
 				<div class="card">
 					<div class="card-header">
 						<h1 class="headline">Jogando agora</h1>
-					</div><!--card header-->
+					</div>
 					<div class="card-block">
 						<?php
 							try {
 								
-								$userid = $_SESSION["logged_userID"];
-
 								$conn = new mysqli($url, $username, $password, $dbname);
 
 								if ($conn->connect_error) {
@@ -90,23 +85,23 @@
 									
 								}
 
-								$query = "SELECT games.gameId, games.gname, games.picture, owned_games.gameId, owned_games.userID, tags.gameId, tags.tag, tags.userID FROM owned_games INNER JOIN games ON owned_games.gameId=games.gameId INNER JOIN tags ON games.gameId=tags.gameId WHERE owned_games.userId='".$userid."' AND tags.tag = 'Jogando' LIMIT 3";
-
-								$result = $conn->query($query);
-
-								echo "<div class='row'>";
-							if ($row = $result->num_rows > 0)
-							{
-								while($row = $result->fetch_assoc()) 
-								{
-									echo "<div class='column-sm game-card'>";
-									echo "<a href=\"show_game.php?gameId=".$row["gameId"]."\"><img class='game-image' src='" . $row["picture"] . "'>";
-									echo $row["gname"]."</a>";
-									echo "</div>";
-								}
-							}
-								echo "</div>";
+								$playingGames = $currentUser->getUserGamesWithTag($conn, 3, 'Jogando');
+								?>
 								
+								<div class='row'>
+
+								<?php
+								foreach ($playingGames as $game) {
+										$currentGame = new Game();
+										$currentGame = $currentGame->getGame($conn, $game['gameId']);
+									?>
+									<div class='column-sm game-card'>
+									<a href='show_game.php?gameId=<?php echo $currentGame->getGameId(); ?>'>
+										<img class='game-image' src='<?php echo $currentGame->getPictureSrc(); ?>'>
+									<?php echo $currentGame->getname() ?></a>
+									</div>
+									<?php
+								}
 								$conn->close();
 							}
 							catch(Exception $e)
@@ -114,16 +109,17 @@
 								echo $e->getMessage();
 							}
 						?>
-					</div><!-- card-block -->
+						</div>
+					</div>
 					<div class="card-footer">
 						<form align="right" method="LINK" action="edit_tags.php">
 							<input class="btn" type="submit" value="Editar Tags">
 						</form>
-					</div><!-- card-footer -->
-				</div><!-- card -->
+					</div>
+				</div>
 			</article>
-			</div> <!-- column -->
-		</div> <!-- row -->
+			</div> 
+		</div> 
 
 		<div class="row">
 			<div class="column-sm">
@@ -131,8 +127,8 @@
 				<div class="card contractors">
 					<div class="card-header">
 						<h1 class="headline">Solicitações de Amizade</h1>
-					</div><!--card header-->
-					<div class="card-block">
+					</div>
+					<div class="card-block" style='flex-direction: column'>
 							<?php
 							try {
 								
@@ -145,24 +141,27 @@
 								}else {
 									
 								}
-
-								$query = "SELECT f.friendID, f.requesterID, fu.username as fu_name, ru.username as ru_name, f.accepted FROM friend f INNER JOIN user fu ON fu.userID = f.friendID INNER JOIN user ru ON ru.userID = f.requesterID WHERE (f.requesterID=".$userid." OR f.friendID=".$userid.") AND f.accepted=0;";
 								
-								$result = $conn->query($query);
-
-
-								if ($row = $result->num_rows > 0)
-								{
-									while($row = $result->fetch_assoc()) 
-									{
-										if (intval($row["friendID"]) == intval($userid))
-										{
-											echo "<a href=\"show_user.php?friendID=".$row["requesterID"]."\">".$row["ru_name"]."</a><br>";
-										}else{
-											echo "<a href=\"show_user.php?friendID=".$row["friendID"]."\">".$row["fu_name"]."</a><br>";
-										}
-									}
+								$relation = new Relation($conn, $currentUser);
+								$friendRequestList = $relation->getFriendRequests();
+								foreach ($friendRequestList as $friendRequest) {
+									?>
+										<div class='row results'>
+											<div class='column-sm'>
+												<img class='img-user' src='images/user-placeholder.png'>
+											</div>
+											<div class='column-lg'>
+											<p style='text-align:left'><?php echo $relation->getFriend($friendRequest)->getUsername();?></p>
+											</div>
+										</div>
+										<div class="row">
+											<button class='btn add-friend' style='margin: 0 2px' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='add'>Adicionar</button>
+											<button class='btn add-friend' style='margin: 0 2px' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='reject'>Rejeitar</button>										
+										</div>
+										<hr>
+									<?php
 								}
+								
 								$conn->close();
 							}
 							catch(Exception $e)
@@ -175,17 +174,17 @@
 						<form method="LINK" action="search_friend.php">
 							<input class="btn" type="submit" value="Adicionar Amigos">
 						</form>						
-					</div><!-- card-footer -->
-				</div><!-- card -->
+					</div>
+				</div>
 			</article>
-			</div><!-- column -->
+			</div>
 
 			<div class="column-lg">
 			<article>
 				<div class="card">
 					<div class="card-header">
 						<h1 class="headline">Suas Análises</h1>
-					</div><!--card header-->
+					</div>
 					<div class="card-block">
 						<?php
 							try {
@@ -199,7 +198,8 @@
 								}else {
 									
 								}
-								
+
+
 								$query = "SELECT games.gameId, games.gname, games.icon, recommendation.gameId, recommendation.userID, recommendation.rec FROM recommendation INNER JOIN games ON recommendation.gameId=games.gameId WHERE recommendation.userID='".$userid."';";
 								
 								$result = $conn->query($query);
@@ -226,17 +226,17 @@
 									echo $e->getMessage();
 								}
 						?>
-					</div><!-- card-block -->
+					</div>
 					<div class="card-footer">
 						<form align="right" method="LINK" action="add_recommendation.php">
 							<input class="btn" type="submit" value="Nova Análise">
 						</form>						
-					</div><!-- card-footer -->
-				</div><!-- card -->
+					</div>
+				</div>
 			</article>	
-			</div> <!-- column -->
-		</div> <!-- row -->
-	</div><!-- container -->
+			</div> 
+		</div> 
+	</div>
 </main>
 
 <?php 

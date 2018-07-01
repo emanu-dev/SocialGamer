@@ -4,6 +4,10 @@
 <body>
 	<?php 
 		include 'db_conn_var.php';
+		include_once 'modules/user.handler.php';
+		include_once 'modules/games.handler.php';
+		include_once 'modules/relationship.handler.php';
+		include_once 'modules/friend.relation.handler.php'; 		
 		$userid;
 	?>
 
@@ -23,9 +27,9 @@
 <main id="main">
 	<div class="container slide-in-left">
 		<h1 class="main-headline">Lista de Amigos</h1>
-		<FORM METHOD="LINK" ACTION="search_friend.php">
-			<INPUT class="btn" TYPE="submit" VALUE="Adicionar Amigos">
-		</FORM>
+			<form method="link" ACTION="search_friend.php">
+				<input class="btn" TYPE="submit" VALUE="Adicionar Amigos">
+			</form>
 		<?php
 				try {
 					$conn = new mysqli($url, $username, $password, $dbname);
@@ -36,35 +40,88 @@
 						
 					}
 
-					if (isset($_GET["friendIdDelete"]) && !empty($_GET["friendIdDelete"])) {
-						$deleteId = $_GET["friendIdDelete"];
-						$query = "DELETE FROM friend WHERE userID='".$userid."' AND friendId='" . $deleteId ."';";
-						$result = $conn->query($query);
-					}
+					$currentUser = new User();
+					$currentUser = $currentUser->getUser($conn, $userid);
+					$relation = new Relation($conn, $currentUser);
+					$friendList = $relation->getFriendsList();
 
-					$query = "SELECT f.friendID, f.requesterID, fu.username as fu_name, ru.username as ru_name, f.accepted FROM friend f INNER JOIN user fu ON fu.userID = f.friendID INNER JOIN user ru ON ru.userID = f.requesterID WHERE (f.requesterID=".$userid." OR f.friendID=".$userid.") AND f.accepted=1;";
-					$result = $conn->query($query);
-
-					if ($row = $result->num_rows > 0)
-					{
-						while($row = $result->fetch_assoc()) 
-						{
-							echo "<div class='row results'>
-								<div class='column-sm'>
-								<img src='" . $row['icon'] . "'>
+					foreach ($friendList as $friend) {
+						?>
+								<div class='row results'>
+									<div class='column-sm'>
+										<img class='img-user' src='images/user-placeholder.png'>
+									</div>
+									<div class='column-lg'>
+										<p style='text-align:left'><?php echo $relation->getFriend($friend)->getUsername()?></p>
+										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='block'>Bloquear</button>
+										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unfriend'>Remover</button>
+									</div>
 								</div>
-								<div class='column-lg'>
-								<form class='form--search-result' action='friend_list.php' method='get'>
-								<input type='hidden' name='friendIdDelete' value='". $row['friendId'] ."'>
-								<a href='show_user.php?userId=".$row["friendId"]."'>". $row['cname'] ."</a><br>
-								<input class='btn' type='submit' value='Deletar'>
-								</form>
-								</div>
-								</div>";
-						}
+								<hr>					
+						<?php
 					}
+					?>
+					<hr>
+					<h2>Solicitações Enviadas</h2>
+					<?php 
+						$friendRequestList = $relation->getSentFriendRequests();
+						foreach ($friendRequestList as $friendRequest) {
+							?>
+								<div class='row results'>
+									<div class='column-sm'>
+										<img class='img-user' src='images/user-placeholder.png'>
+									</div>
+									<div class='column-lg'>
+										<p style='text-align:left'><?php echo $relation->getFriend($friendRequest)->getUsername();?></p>
+										<button class='add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='cancel'>Cancelar Solicitação</button>
+									</div>
+								</div>
+								<hr>								
+							<?php
+						}					
+					?>
+					<hr>
+					<h2>Solicitações Recebidas</h2>
+					<?php 
+						$friendRequestList = $relation->getFriendRequests();
+						foreach ($friendRequestList as $friendRequest) {
+							?>
+								<div class='row results'>
+									<div class='column-sm'>
+										<img class='img-user' src='images/user-placeholder.png'>
+									</div>
+									<div class='column-lg'>
+									<p style='text-align:left'><?php echo $relation->getFriend($friendRequest)->getUsername();?></p>
+										<button class='add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='add'>Adicionar</button>
+										<button class='add-friend' data-user='<?php echo $relation->getFriend($friendRequest)->getUserId();?>' data-action='reject'>Rejeitar</button>
+									</div>
+								</div>
+								<hr>
+							<?php
+						}					
+					?>
+					<hr>
+					<h2>Amizades Bloqueadas</h2>
+					<?php 
+					$blockedFriendList = $relation->getBlockedFriends();
 
-
+					foreach ($blockedFriendList as $friend) {
+						?>
+								<div class='row results'>
+									<div class='column-sm'>
+										<img class='img-user' src='images/user-placeholder.png'>
+									</div>
+									<div class='column-lg'>
+										<p style='text-align:left'><?php echo $relation->getFriend($friend)->getUsername()?></p>
+										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unblock'>Desbloquear</button>
+										<button class='add-friend' data-user='<?php echo $relation->getFriend($friend)->getUserId();?>' data-action='unfriend'>Remover</button>
+									</div>
+								</div>
+								<hr>					
+						<?php
+					}
+					?>										
+					<?php
 
 					$conn->close();
 				}

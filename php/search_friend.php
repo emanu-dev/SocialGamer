@@ -4,6 +4,10 @@
 <body>
 	<?php 
 		include 'db_conn_var.php';
+		include_once 'modules/user.handler.php';
+		include_once 'modules/games.handler.php';
+		include_once 'modules/relationship.handler.php';
+		include_once 'modules/friend.relation.handler.php'; 		
 		$userid;
 	?>
 
@@ -33,10 +37,14 @@
 
 				if ($conn->connect_error) {
 					throw new Exception($conn->connect_error);
-				}else {
-					
 				}
 				
+				$currentUser = new User();
+				$currentUser = $currentUser->getUser($conn, $userid);
+		
+				$relation = new Relation($conn, $currentUser);
+				
+
 				if (isset($_GET["keyword"]) && !empty($_GET["keyword"])) {
 					$uname = $_GET['keyword'];
 					$query = "SELECT * FROM user WHERE username LIKE '%" . $uname . "%' and userID!='" . $userid . "'";
@@ -56,9 +64,9 @@
 				}
 				
 				if (isset($_GET["friendID"]) && !empty($_GET["friendID"])){
-					$friendToAddID = $_GET['friendID'];
-					$query = "INSERT INTO friend (requesterID, friendID, accepted) VALUES ('" . $userid . "' , '" . $friendToAddID . "' , '0')";
-					$result = $conn->query($query);
+					$friendUser = new User();
+					$friendUser = $friendUser -> getUser($conn, $_GET['friendID']);
+					$relation->addFriendRequest($friendUser);
 					echo "<br>Pedido de Amizade enviado!";
 				}
 				$conn->close();

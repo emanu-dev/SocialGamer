@@ -6,7 +6,7 @@ session_start();
 <html lang='pt-br'>
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="style/indexStyle.css">
+	<!-- <link rel="stylesheet" type="text/css" href="style/indexStyle.css"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Wegamr</title>
 </head>
@@ -34,45 +34,6 @@ session_start();
 				}
 			}
 
-		try {
-			$conn = new mysqli($url, $username, $password, $dbname);
-
-			if ($conn->connect_error) {
-				throw new Exception($conn->connect_error);
-			}else {
-				
-			}
-	    	
-	    	$query = "CREATE TABLE IF NOT EXISTS user(userID int AUTO_INCREMENT, username varchar(15), password varchar(8), dob date, image mediumblob, PRIMARY KEY(userID));";
-			mysqli_query($conn, $query);
-	    	
-	    	$query = "CREATE TABLE IF NOT EXISTS console(consoleID int AUTO_INCREMENT, cname varchar(15), manufacturer varchar(15), PRIMARY KEY(consoleID));";		    	
-	    	mysqli_query($conn, $query);
-	    	
-	    	$query = "CREATE TABLE IF NOT EXISTS game(gameID int AUTO_INCREMENT, gname varchar(30), publisher varchar(15), rating varchar(1), consolename int, PRIMARY KEY(gameID), FOREIGN KEY (consolename) REFERENCES console(consoleID));";
-			mysqli_query($conn, $query);
-	    	
-	    	$query = "CREATE TABLE IF NOT EXISTS owned_consoles(consoleID int, userID int, FOREIGN KEY consoleID(consoleID) REFERENCES console(consoleID), FOREIGN KEY (userID) REFERENCES user(userID));";
-			mysqli_query($conn, $query);
-			
-			$query = "CREATE TABLE IF NOT EXISTS owned_games(gameID int, userID int, FOREIGN KEY gameID(gameID) REFERENCES game(gameID), FOREIGN KEY (userID) REFERENCES user(userID));";
-			mysqli_query($conn, $query);
-			
-			$query = "CREATE TABLE IF NOT EXISTS friend(requesterID int, friendID int, accepted boolean, FOREIGN KEY requesterID(requesterID) REFERENCES user(userID), FOREIGN KEY (friendID) REFERENCES user(userID));";	
-			mysqli_query($conn, $query);
-			
-			$query = "CREATE TABLE IF NOT EXISTS recommendation(userID int, gameID int, rec text, FOREIGN KEY userID(userID) REFERENCES user(userID), FOREIGN KEY (gameID) REFERENCES game(gameID));";				
-			mysqli_query($conn, $query);
-			
-			$query = "CREATE TABLE IF NOT EXISTS tags(userID int, gameID int, tag varchar(10), FOREIGN KEY (userID) REFERENCES user(userID), FOREIGN KEY (gameID) REFERENCES game(gameID));";
-			mysqli_query($conn, $query);
-			
-			mysqli_close($conn);	
-		}
-		catch(Exception $e)
-		{
-		    echo $e->getMessage();
-		}
 	?>
 	<div class="box-wrapper">
 		<div class="signBox flip-in-ver-right">
@@ -124,4 +85,5 @@ session_start();
 		</div>
 	</div>
 </body>
+<script src="style/bundle.js"></script>
 </html>

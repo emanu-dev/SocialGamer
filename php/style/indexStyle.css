@@ -712,9 +712,16 @@ body {
     -webkit-transform: scale(1.05);
             transform: scale(1.05); }
 
+.add-friend:hover {
+  cursor: pointer; }
+
+.img-user {
+  height: 64px;
+  width: 64px; }
+
 .main-logo {
   height: auto;
-  width: 200px; }
+  width: 201px; }
 
 .logo-title {
   font-size: 2rem;

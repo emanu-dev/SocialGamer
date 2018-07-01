@@ -23,7 +23,7 @@
 <main id="main">
 	<div class="container slide-in-left">
 		<h1 class="main-headline">Biblioteca de Consoles</h1>
-		<FORM METHOD="LINK" ACTION="search_Console.php">
+		<FORM METHOD="LINK" ACTION="search_console.php">
 			<INPUT class="btn" TYPE="submit" VALUE="Adicionar Console">
 		</FORM>
 		<?php
